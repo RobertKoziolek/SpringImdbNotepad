@@ -28,4 +28,8 @@ public class MovieService {
     public List<Movie> getAll() {
         return movieRepository.findAll();
     }
+
+    public void remove(final Long id) {
+        movieRepository.deleteById(id);
+    }
 }

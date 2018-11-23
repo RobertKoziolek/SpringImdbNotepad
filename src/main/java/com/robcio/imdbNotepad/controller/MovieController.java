@@ -29,4 +29,10 @@ public class MovieController {
         return "redirect:/";
     }
 
+    @DeleteMapping("/remove/{id}")
+    public String remove(@PathVariable final Long id){
+        movieService.remove(id);
+        return "redirect:/";
+    }
+
 }

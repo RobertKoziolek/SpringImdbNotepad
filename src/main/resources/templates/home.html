@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>App nexus</title>
+    <title>IMDb notepad</title>
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
     <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>IMDB notepad!</h1>
+    <h1>IMDb notepad!</h1>
     <p>Use this to save movies you would like to watch!
         <button aria-controls="addUser" aria-expanded="false" class="btn btn-primary float-right" data-target="#addUser"
                 data-toggle="collapse" type="button">
@@ -48,7 +48,14 @@
             <tbody>
             <th:block th:each="movie : ${movies}">
                 <tr>
-                    <td th:text="${movie.id}">id</td>
+                    <td>
+                        <form th:action="@{/remove/__${movie.id}__}" th:method="delete">
+                            <button type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-remove">remove</span>
+                            </button>
+                            <span th:text="${movie.id}">id</span>
+                        </form>
+                    </td>
                     <td>
                         <a th:href="${movie.url}">
                             <span th:text="${movie.name}">name</span>

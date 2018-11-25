@@ -26,7 +26,6 @@ public class ImdbParserService {
             final Document document = Jsoup.connect(imdbUrl)
                                            .header("Accept-Language", languageCode)
                                            .get();
-            final String name = document.title();
             final Elements type = document.getElementsByAttributeValue("type", "application/ld+json");
 
             final ObjectMapper objectMapper = new ObjectMapper();
@@ -52,11 +51,6 @@ public class ImdbParserService {
     @Async
     public CompletableFuture<Movie> parseAsync(final String imdbUrl) {
         return CompletableFuture.completedFuture(parse(imdbUrl));
-    }
-
-    public void adjustLanguage(final Movie movie, final String languageCode) {
-        final Movie parsed = parse(movie.getUrl());
-        movie.setName(parsed.getName());
     }
 
 }

@@ -15,14 +15,6 @@
 </head>
 <body>
 <div class="container">
-    <form th:method="post" th:action="@{/language/__${language}__}">
-        <input type="hidden" name="_method" value="PUT"/>
-        <label for="language">Language</label>
-        <select class="form-control" id="language" name="languageCode" onchange="this.form.submit()">
-            <option>pl</option>
-            <option>en</option>
-        </select>
-    </form>
     <h1>IMDb notepad!</h1>
     <p>Use this to save movies you would like to watch!
     <form th:action="@{/update}" method="post">

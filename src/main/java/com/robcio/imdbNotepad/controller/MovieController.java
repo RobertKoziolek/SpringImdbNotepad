@@ -45,12 +45,6 @@ public class MovieController {
         return "redirect:/";
     }
 
-    @PutMapping("/language/{languageCode}")
-    public String adjustLanguage(@PathVariable final String languageCode) {
-        movieService.adjustLanguage(languageCode);
-        return "redirect:/";
-    }
-
     @PutMapping("/update")
     public String updateInfo() {
         movieService.updateAll();

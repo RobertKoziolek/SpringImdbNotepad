@@ -47,14 +47,6 @@ public class MovieService {
         movieRepository.deleteById(id);
     }
 
-    public void adjustLanguage(final String languageCode) {
-        //TODO movie title language adjustment
-//        final List<Movie> all = movieRepository.findAll();
-//        all.forEach(m -> imdbParserService.adjustLanguage(m, languageCode));
-//        imdbParserService.adjustLanguage(all.get(0), languageCode);
-        logger.debug("Language code is {}", languageCode);
-    }
-
     public void edit(final Long id, final Movie editData) {
         final Movie movie = get(id);
         final String description = editData.getDescription();

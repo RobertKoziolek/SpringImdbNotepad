@@ -11,6 +11,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="../css/Layout.css" th:href="@{css/Layout.css}" type="text/css"/>
 </head>
 <body>
 <div class="container">
@@ -24,10 +25,16 @@
     </form>
     <h1>IMDb notepad!</h1>
     <p>Use this to save movies you would like to watch!
-        <button aria-controls="addUser" aria-expanded="false" class="btn btn-primary float-right" data-target="#addUser"
-                data-toggle="collapse" type="button">
-            Add movie
+    <form th:action="@{/update}" method="post">
+        <input type="hidden" name="_method" value="PUT"/>
+        <button class="btn btn-primary" type="submit">
+            Update all
         </button>
+    </form>
+    <button aria-controls="addUser" aria-expanded="false" class="btn btn-primary" data-target="#addUser"
+            data-toggle="collapse" type="button">
+        Add movie
+    </button>
     </p>
     <div class="collapse" id="addUser">
         <div class="jumbotron">

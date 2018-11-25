@@ -5,10 +5,13 @@ import com.robcio.imdbNotepad.repository.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class MovieService {
@@ -61,4 +64,30 @@ public class MovieService {
         }
         movieRepository.save(movie);
     }
+
+    public void updateAll() {
+        final List<Movie> all = getAll();
+        final List<CompletableFuture<Movie>> futures = new LinkedList<>();
+        logger.debug("Updating");
+        all.forEach(movie -> {
+            logger.debug("Downloading {}", movie.getName());
+            final CompletableFuture<Movie> movieFuture = imdbParserService.parseAsync(movie.getUrl());
+            futures.add(movieFuture);
+        });
+        logger.debug("Waiting for imdb");
+        final CompletableFuture[] completableFutures = futures.toArray(new CompletableFuture[0]);
+        CompletableFuture.allOf(completableFutures)
+                         .join();
+        try {
+            for (final CompletableFuture<Movie> future : futures) {
+                final Movie movie = future.get();
+                movieRepository.save(movie);
+            }
+        } catch (final Exception e) {
+            logger.error("Could not complete update");
+        }
+        all.forEach(movieRepository::delete);
+        logger.debug("Finished");
+    }
+
 }

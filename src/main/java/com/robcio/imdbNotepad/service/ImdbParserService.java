@@ -3,9 +3,11 @@ package com.robcio.imdbNotepad.service;
 import com.robcio.imdbNotepad.entity.Movie;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class ImdbParserService {
@@ -24,6 +26,22 @@ public class ImdbParserService {
             movie.setName(name);
             movie.setUrl(imdbUrl);
             return movie;
+        } catch (final IOException e) {
+            throw new RuntimeException("Could not connect to provided URL");
+        }
+    }
+
+    @Async
+    public CompletableFuture<Movie> parseAsync(final String imdbUrl) {
+        try {
+            final Document document = Jsoup.connect(imdbUrl)
+                                           .header("Accept-Language", "en")
+                                           .get();
+            final String name = document.title();
+            final Movie movie = new Movie();
+            movie.setName(name);
+            movie.setUrl(imdbUrl);
+            return CompletableFuture.completedFuture(movie);
         } catch (final IOException e) {
             throw new RuntimeException("Could not connect to provided URL");
         }

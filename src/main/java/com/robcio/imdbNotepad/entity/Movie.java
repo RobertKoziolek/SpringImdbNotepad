@@ -22,4 +22,7 @@ public class Movie {
 
     private String description;
 
+    public void update(final Movie updated) {
+        this.name = updated.name;
+    }
 }

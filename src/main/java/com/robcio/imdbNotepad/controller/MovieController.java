@@ -48,6 +48,12 @@ public class MovieController {
         return "redirect:/";
     }
 
+    @PutMapping("/update")
+    public String updateInfo() {
+        movieService.updateAll();
+        return "redirect:/";
+    }
+
     @PutMapping("/edit/{id}")
     public String adjustLanguage(@PathVariable final Long id, @ModelAttribute Movie movie) {
         movieService.edit(id, movie);

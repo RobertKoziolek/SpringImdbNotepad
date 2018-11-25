@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <a th:href="@{/}"><h1>IMDb notepad!</h1></a>
+    <a th:href="@{/details}"><h1>IMDb notepad!</h1></a>
 
     <div class="row">
         <div class="col-sm-4" th:each="movie : ${movies}" th:classappend="${movie.type.equals('Movie')} ? bg-light : bg-secondary">

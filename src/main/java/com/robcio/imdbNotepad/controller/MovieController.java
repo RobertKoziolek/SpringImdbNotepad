@@ -18,13 +18,13 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/details")
     public String showNotepad(final Model model) {
         model.addAttribute("movies", movieService.getAll());
         return "home";
     }
 
-    @GetMapping("/images")
+    @GetMapping("/")
     public String showNotepadImages(final Model model) {
         model.addAttribute("movies", movieService.getAll());
         return "image_view";

@@ -14,6 +14,14 @@
 </head>
 <body>
 <div class="container">
+    <form th:method="post" th:action="@{/language/__${language}__}">
+        <input type="hidden" name="_method" value="PUT"/>
+        <label for="language">Language</label>
+        <select class="form-control" id="language" name="languageCode" onchange="this.form.submit()">
+            <option>pl</option>
+            <option>en</option>
+        </select>
+    </form>
     <h1>IMDb notepad!</h1>
     <p>Use this to save movies you would like to watch!
         <button aria-controls="addUser" aria-expanded="false" class="btn btn-primary float-right" data-target="#addUser"
@@ -30,6 +38,10 @@
                     <div class="col-sm-10">
                         <input class="form-control" id="imdbUrl" name="imdbUrl" placeholder="IMDB url" type="text">
                     </div>
+                    <label class="control-label col-sm-2" for="description">Description:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="description" name="description" type="text">
+                    </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button class="btn btn-default" type="submit">Submit</button>
                     </div>
@@ -41,8 +53,11 @@
         <table class="table">
             <thead class="thead-dark">
             <tr>
+                <th scope="col"></th>
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -53,13 +68,25 @@
                             <button type="submit" class="btn btn-info">
                                 <span class="glyphicon glyphicon-remove">remove</span>
                             </button>
-                            <span th:text="${movie.id}">id</span>
                         </form>
+                    </td>
+                    <td>
+                        <span th:text="${movie.id}">id</span>
                     </td>
                     <td>
                         <a th:href="${movie.url}">
                             <span th:text="${movie.name}">name</span>
                         </a>
+                    </td>
+                    <td>
+                        <span th:text="${movie.description}">description</span>
+                    </td>
+                    <td>
+                        <form th:action="@{/edit/__${movie.id}__}" th:method="get">
+                            <button type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-pencil">edit</span>
+                            </button>
+                        </form>
                     </td>
                 </tr>
             </th:block>

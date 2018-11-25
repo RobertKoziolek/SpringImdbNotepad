@@ -1,5 +1,6 @@
 package com.robcio.imdbNotepad.controller;
 
+import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,15 +24,33 @@ public class MovieController {
         return "home";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable final Long id, final Model model) {
+        model.addAttribute("movie", movieService.get(id));
+        return "edit";
+    }
+
     @PostMapping("/add")
-    public String add(@RequestParam final String imdbUrl) {
-        movieService.add(imdbUrl);
+    public String add(@RequestParam final String imdbUrl, @RequestParam final String description) {
+        movieService.add(imdbUrl, description);
         return "redirect:/";
     }
 
     @DeleteMapping("/remove/{id}")
-    public String remove(@PathVariable final Long id){
+    public String remove(@PathVariable final Long id) {
         movieService.remove(id);
+        return "redirect:/";
+    }
+
+    @PutMapping("/language/{languageCode}")
+    public String adjustLanguage(@PathVariable final String languageCode) {
+        movieService.adjustLanguage(languageCode);
+        return "redirect:/";
+    }
+
+    @PutMapping("/edit/{id}")
+    public String adjustLanguage(@PathVariable final Long id, @ModelAttribute Movie movie) {
+        movieService.edit(id, movie);
         return "redirect:/";
     }
 

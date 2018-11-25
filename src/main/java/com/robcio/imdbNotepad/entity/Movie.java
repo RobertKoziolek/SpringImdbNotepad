@@ -1,7 +1,6 @@
 package com.robcio.imdbNotepad.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,9 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,9 +22,16 @@ public class Movie {
 
     private String url;
 
+    private String imageUrl;
+
     private String description;
 
-    public void update(final Movie updated) {
-        this.name = updated.name;
-    }
+    private String genres;
+
+    private String duration;
+
+    private String dateCreated;
+
+    private String rating;
+
 }

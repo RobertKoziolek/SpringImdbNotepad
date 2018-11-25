@@ -45,10 +45,6 @@
                     <div class="col-sm-10">
                         <input class="form-control" id="imdbUrl" name="imdbUrl" placeholder="IMDB url" type="text">
                     </div>
-                    <label class="control-label col-sm-2" for="description">Description:</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" id="description" name="description" type="text">
-                    </div>
                     <div class="col-sm-offset-2 col-sm-10">
                         <button class="btn btn-default" type="submit">Submit</button>
                     </div>
@@ -61,8 +57,10 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Id</th>
+                <th scope="col">Rating</th>
                 <th scope="col">Name</th>
+                <th scope="col">Genres</th>
+                <th scope="col">Published</th>
                 <th scope="col">Description</th>
                 <th scope="col"></th>
             </tr>
@@ -85,12 +83,18 @@
                         </div>
                     </td>
                     <td>
-                        <span th:text="${movie.id}">id</span>
+                        <span th:text="${movie.rating}">id</span>
                     </td>
                     <td>
                         <a th:href="${movie.url}">
                             <span th:text="${movie.name}">name</span>
                         </a>
+                    </td>
+                    <td>
+                        <span th:text="${movie.genres}">genres</span>
+                    </td>
+                    <td>
+                        <span th:text="${movie.dateCreated}">date created</span>
                     </td>
                     <td>
                         <span th:text="${movie.description}">description</span>

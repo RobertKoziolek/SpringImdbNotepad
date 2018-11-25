@@ -29,9 +29,8 @@ public class MovieService {
         this.imdbParserService = imdbParserService;
     }
 
-    public void add(final String imdbUrl, String description) {
+    public void add(final String imdbUrl) {
         final Movie movie = imdbParserService.parse(imdbUrl);
-        movie.setDescription(description);
         movieRepository.save(movie);
     }
 

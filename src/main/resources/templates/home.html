@@ -64,11 +64,18 @@
             <th:block th:each="movie : ${movies}">
                 <tr>
                     <td>
-                        <form th:action="@{/remove/__${movie.id}__}" th:method="delete">
-                            <button type="submit" class="btn btn-info">
-                                <span class="glyphicon glyphicon-remove">remove</span>
-                            </button>
-                        </form>
+                        <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
+                                th:data-target="'#' + ${movie.id}"
+                                data-toggle="collapse" type="button">
+                            remove
+                        </button>
+                        <div class="collapse" th:id="${movie.id}">
+                            <form th:action="@{/remove/__${movie.id}__}" th:method="delete">
+                                <button type="submit" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-remove">confirm</span>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                     <td>
                         <span th:text="${movie.id}">id</span>

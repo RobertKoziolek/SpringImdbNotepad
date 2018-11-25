@@ -27,6 +27,12 @@ public class MovieController {
         return "home";
     }
 
+    @GetMapping("/images")
+    public String showNotepadImages(final Model model) {
+        model.addAttribute("movies", movieService.getAll());
+        return "image_view";
+    }
+
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable final Long id, final Model model) {
         model.addAttribute("movie", movieService.get(id));

@@ -1,5 +1,6 @@
 package com.robcio.imdbNotepad.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.response.MovieInformation;
@@ -43,6 +44,8 @@ public class ImdbParserService {
                                                 .get())
                         .url(imdbUrl)
                         .build();
+        } catch (final JsonProcessingException e) {
+            throw new RuntimeException("Could not read json info from: " + imdbUrl);
         } catch (final IOException e) {
             throw new RuntimeException("Could not connect to: " + imdbUrl);
         }

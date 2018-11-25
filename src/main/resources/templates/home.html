@@ -11,11 +11,11 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link href="../css/Layout.css" th:href="@{css/Layout.css}" type="text/css"/>
 </head>
 <body>
 <div class="container">
-    <h1>IMDb notepad!</h1>
+    <a th:href="@{/images}"><h1>IMDb notepad!</h1></a>
+
     <p>Use this to save movies you would like to watch!
     <form th:action="@{/update}" method="post">
         <input type="hidden" name="_method" value="PUT"/>
@@ -78,7 +78,7 @@
                         <span th:text="${movie.rating}">id</span>
                     </td>
                     <td>
-                        <a th:href="${movie.url}">
+                        <a target="_blank" th:href="${movie.url}">
                             <span th:text="${movie.name}">name</span>
                         </a>
                     </td>

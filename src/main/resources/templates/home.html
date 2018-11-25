@@ -51,6 +51,7 @@
                 <th scope="col"></th>
                 <th scope="col">Rating</th>
                 <th scope="col">Name</th>
+                <th scope="col">Type</th>
                 <th scope="col">Genres</th>
                 <th scope="col">Published</th>
                 <th scope="col">Description</th>
@@ -81,6 +82,9 @@
                         <a target="_blank" th:href="${movie.url}">
                             <span th:text="${movie.name}">name</span>
                         </a>
+                    </td>
+                    <td>
+                        <span th:text="${movie.type}">type</span>
                     </td>
                     <td>
                         <span th:text="${movie.genres}">genres</span>

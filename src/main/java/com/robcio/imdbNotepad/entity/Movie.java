@@ -34,4 +34,5 @@ public class Movie {
 
     private String rating;
 
+    private String type;
 }

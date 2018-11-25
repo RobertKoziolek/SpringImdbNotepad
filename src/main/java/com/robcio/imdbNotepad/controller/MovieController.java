@@ -1,14 +1,11 @@
 package com.robcio.imdbNotepad.controller;
 
 import com.robcio.imdbNotepad.entity.Movie;
-import com.robcio.imdbNotepad.response.MovieInformation;
 import com.robcio.imdbNotepad.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/")

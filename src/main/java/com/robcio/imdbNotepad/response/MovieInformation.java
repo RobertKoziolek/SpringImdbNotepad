@@ -27,15 +27,16 @@ public class MovieInformation {
 
     private String rating;
 
-    @SuppressWarnings("unchecked")
+    @JsonProperty("@type")
+    private String type;
+
     @JsonProperty("review")
     private void unpackDateCreated(final Map<String,Object> review) {
-        this.dateCreated = (String)review.get("dateCreated");
+        dateCreated = (String)review.get("dateCreated");
     }
 
-    @SuppressWarnings("unchecked")
     @JsonProperty("aggregateRating")
     private void unpackRating(final Map<String,Object> aggregateRating) {
-        this.rating = (String)aggregateRating.get("ratingValue");
+        rating = (String)aggregateRating.get("ratingValue");
     }
 }

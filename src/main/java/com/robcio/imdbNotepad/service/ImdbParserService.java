@@ -9,8 +9,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -33,6 +31,7 @@ public class ImdbParserService {
             final MovieInformation movieInformation = objectMapper.readValue(type.html(), MovieInformation.class);
             return Movie.builder()
                         .name(movieInformation.getName())
+                        .type(movieInformation.getType())
                         .description(movieInformation.getDescription())
                         .duration(movieInformation.getDuration())
                         .dateCreated(movieInformation.getDateCreated())

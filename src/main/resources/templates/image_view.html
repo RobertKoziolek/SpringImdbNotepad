@@ -17,9 +17,11 @@
     <a th:href="@{/}"><h1>IMDb notepad!</h1></a>
 
     <div class="row">
-        <div class="col-sm-4" th:each="movie : ${movies}">
-            <a target="_blank" th:href="${movie.url}"><h3 th:text="${movie.name}">Title</h3></a>
-            <img class="img-thumbnail" th:alt="${movie.name}" th:src="${movie.imageUrl}">
+        <div class="col-sm-4" th:each="movie : ${movies}" th:classappend="${movie.type.equals('Movie')} ? bg-light : bg-secondary">
+            <h3 th:text="${movie.name} + ' (' + ${movie.dateCreated} + ')'">Title</h3>
+            <a target="_blank" th:href="${movie.url}">
+                <img class="img-thumbnail" th:alt="${movie.name}" th:src="${movie.imageUrl}">
+            </a>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package com.robcio.imdbNotepad.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.response.MovieInformation;
@@ -16,6 +17,13 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class ImdbParserService {
 
+    private final ObjectMapper objectMapper;
+
+    public ImdbParserService(){
+        objectMapper = new ObjectMapper();
+        objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+    }
+
     public Movie parse(final String imdbUrl) {
         return parse(imdbUrl, "en");
     }
@@ -26,8 +34,6 @@ public class ImdbParserService {
                                            .header("Accept-Language", languageCode)
                                            .get();
             final Elements type = document.getElementsByAttributeValue("type", "application/ld+json");
-
-            final ObjectMapper objectMapper = new ObjectMapper();
             final MovieInformation movieInformation = objectMapper.readValue(type.html(), MovieInformation.class);
             return Movie.builder()
                         .name(movieInformation.getName())

@@ -60,7 +60,8 @@
             </thead>
             <tbody>
             <th:block th:each="movie : ${movies}">
-                <tr>
+                <tr th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''}
+        ${movie.type.equals('WATCHED') ? 'bg-danger' : ''} ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">
                     <td>
                         <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
                                 th:data-target="'#' + ${movie.id}"
@@ -99,6 +100,12 @@
                         <form th:action="@{/edit/__${movie.id}__}" th:method="get">
                             <button type="submit" class="btn btn-info">
                                 <span class="glyphicon glyphicon-pencil">edit</span>
+                            </button>
+                        </form>
+                        <form th:action="@{/watched/__${movie.id}__}" th:method="post">
+                            <input type="hidden" name="_method" value="PUT"/>
+                            <button type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-pencil">watched</span>
                             </button>
                         </form>
                     </td>

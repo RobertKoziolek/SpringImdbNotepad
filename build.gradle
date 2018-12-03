@@ -1,41 +1,67 @@
 buildscript {
-	ext {
-		springBootVersion = '2.0.2.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '2.0.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
 
 group = 'com.robcio'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
-	implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.springframework.boot:spring-boot-starter-web')
 
-	compile 'mysql:mysql-connector-java'
+    compile 'mysql:mysql-connector-java'
 
-	compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
 
-	compileOnly "org.projectlombok:lombok:1.16.20"
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+    compileOnly "org.projectlombok:lombok:1.16.20"
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+task unpack(type: Copy) {
+    dependsOn bootJar
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/dependency")
+}
+
+jar () {
+    baseName = "imdbnotepad"
+    group = "build"
+    version = "0.0.1-SNAPSHOT"
+    manifest { attributes "Main-Class": "com.robcio.imdbNotepad.ImdbNotepadApplication" }
+}
+
+task buildDocker(type: Docker, dependsOn: build, group: 'application') {
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
 }

@@ -60,4 +60,10 @@ public class MovieController {
         return "redirect:/";
     }
 
+    @PutMapping("/watched/{id}")
+    public String markAsWatched(@PathVariable final Long id) {
+        movieService.markAsWatched(id);
+        return "redirect:/";
+    }
+
 }

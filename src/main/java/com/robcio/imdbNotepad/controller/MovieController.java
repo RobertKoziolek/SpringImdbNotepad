@@ -2,6 +2,7 @@ package com.robcio.imdbNotepad.controller;
 
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.service.MovieService;
+import com.robcio.imdbNotepad.service.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,21 +13,23 @@ import org.springframework.web.bind.annotation.*;
 public class MovieController {
 
     private final MovieService movieService;
+    private final UpdateService updateService;
 
     @Autowired
-    public MovieController(final MovieService movieService) {
+    public MovieController(final MovieService movieService, final UpdateService updateService) {
         this.movieService = movieService;
+        this.updateService = updateService;
     }
 
     @GetMapping("/details")
     public String showNotepad(final Model model) {
-        model.addAttribute("movies", movieService.getAll());
+        model.addAttribute("movies", movieService.getAllByType());
         return "home";
     }
 
     @GetMapping("/")
     public String showNotepadImages(final Model model) {
-        model.addAttribute("movies", movieService.getAll());
+        model.addAttribute("movies", movieService.getAllByType());
         return "image_view";
     }
 
@@ -50,7 +53,7 @@ public class MovieController {
 
     @PutMapping("/update")
     public String updateInfo() {
-        movieService.updateAll();
+        updateService.updateAll();
         return "redirect:/";
     }
 

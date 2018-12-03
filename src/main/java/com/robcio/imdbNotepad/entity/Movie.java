@@ -14,6 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Movie {
+    public static final String WATCHED = "WATCHED";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

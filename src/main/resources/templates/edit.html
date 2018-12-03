@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>IMDb notepad!</h1>
+    <a th:href="@{/details}"><h1>IMDb notepad!</h1></a>
     <p>
         Edit saved movie here
     </p>
@@ -27,7 +27,6 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="movie : ${movies}">
                 <tr>
                     <td>
                         <span th:text="${movie.id}">id</span>
@@ -36,7 +35,6 @@
                         <span th:text="${movie.name}">name</span>
                     </td>
                 </tr>
-            </th:block>
             </tbody>
         </table>
     </div>

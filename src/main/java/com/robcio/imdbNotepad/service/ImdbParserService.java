@@ -25,13 +25,8 @@ public class ImdbParserService {
     }
 
     public Movie parse(final String imdbUrl) {
-        return parse(imdbUrl, "en");
-    }
-
-    private Movie parse(final String imdbUrl, final String languageCode) {
         try {
             final Document document = Jsoup.connect(imdbUrl)
-                                           .header("Accept-Language", languageCode)
                                            .get();
             final Elements type = document.getElementsByAttributeValue("type", "application/ld+json");
             final MovieInformation movieInformation = objectMapper.readValue(type.html(), MovieInformation.class);
@@ -43,10 +38,7 @@ public class ImdbParserService {
                         .dateCreated(movieInformation.getDateCreated())
                         .rating(movieInformation.getRating())
                         .imageUrl(movieInformation.getImage())
-                        .genres(movieInformation.getGenre()
-                                                .stream()
-                                                .reduce(String::concat)
-                                                .get())
+                        .genres(movieInformation.getGenre())
                         .url(imdbUrl)
                         .build();
         } catch (final JsonProcessingException e) {

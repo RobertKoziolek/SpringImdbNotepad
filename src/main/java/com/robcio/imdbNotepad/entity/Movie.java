@@ -2,10 +2,8 @@ package com.robcio.imdbNotepad.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +25,10 @@ public class Movie {
 
     private String description;
 
-    private String genres;
+    @ElementCollection
+    @CollectionTable(name="Genres", joinColumns=@JoinColumn(name="movie_id"))
+    @Column(name="genre")
+    private Set<String> genres;
 
     private String duration;
 

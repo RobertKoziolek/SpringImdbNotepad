@@ -15,31 +15,34 @@
 <body>
 <div class="container">
     <a th:href="@{/}"><h1>IMDb notepad!</h1></a>
+    <p>Use this to save movies you would like to watch!</p>
 
-    <p>Use this to save movies you would like to watch!
-    <form th:action="@{/update}" method="post">
-        <input type="hidden" name="_method" value="PUT"/>
-        <button class="btn btn-primary" type="submit">
-            Update all
-        </button>
-    </form>
-    <button aria-controls="addUser" aria-expanded="false" class="btn btn-primary" data-target="#addUser"
-            data-toggle="collapse" type="button">
-        Add movie
-    </button>
-    </p>
-    <div class="collapse" id="addUser">
+    <div class="alert alert-light" id="topButtons">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
+                Update all
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUser">
+                Add movie
+            </button>
+            <button aria-controls="genres" aria-expanded="false" class="btn btn-primary" data-target="#genres"
+                    data-toggle="collapse" type="button">
+                Genres
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="genres">
         <div class="jumbotron">
-            <h1>Add movie</h1>
-            <form class="form-horizontal" method="post" th:action="@{/add}">
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="imdbUrl">Url:</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" id="imdbUrl" name="imdbUrl" placeholder="IMDB url" type="text">
-                    </div>
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default" type="submit">Submit</button>
-                    </div>
+            <h2>Genres:</h2>
+            <form class="form-horizontal" method="get" th:action="@{/details}">
+                <div class="form-check">
+                    <th:block th:each="genre : ${genres}">
+                        <div class="checkbox">
+                            <label th:for="${genre}" th:text="${genre}">Genre</label>
+                            <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}">
+                        </div>
+                    </th:block>
+                    <button class="btn btn-default" type="submit">Submit</button>
                 </div>
             </form>
         </div>
@@ -54,7 +57,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Genres</th>
                 <th scope="col">Published</th>
-                <th scope="col">Description</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -94,14 +97,13 @@
                         <span th:text="${movie.dateCreated}">date created</span>
                     </td>
                     <td>
-                        <span th:text="${movie.description}">description</span>
-                    </td>
-                    <td>
                         <form th:action="@{/edit/__${movie.id}__}" th:method="get">
                             <button type="submit" class="btn btn-info">
                                 <span class="glyphicon glyphicon-pencil">edit</span>
                             </button>
                         </form>
+                    </td>
+                    <td>
                         <form th:action="@{/watched/__${movie.id}__}" th:method="post">
                             <input type="hidden" name="_method" value="PUT"/>
                             <button type="submit" class="btn btn-info">
@@ -113,6 +115,63 @@
             </th:block>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!--modal for updating-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update all</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This action will redownload all movies info.</p>
+                <p>This action might take a while.</p>
+            </div>
+            <div class="modal-footer">
+                <form th:action="@{/update}" method="post">
+                    <input type="hidden" name="_method" value="PUT"/>
+                    <button class="btn btn-primary" type="submit">
+                        Confirm
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal for movie addition-->
+<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUserLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserLabel">Add a movie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-horizontal" method="post" th:action="@{/add}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="imdbUrl">Url:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="imdbUrl" name="imdbUrl" placeholder="IMDB url" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-default" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 </body>

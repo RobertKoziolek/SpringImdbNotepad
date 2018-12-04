@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -19,7 +21,7 @@ public class ImdbParserService {
 
     private final ObjectMapper objectMapper;
 
-    public ImdbParserService(){
+    public ImdbParserService() {
         objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
     }
@@ -39,12 +41,14 @@ public class ImdbParserService {
                         .rating(movieInformation.getRating())
                         .imageUrl(movieInformation.getImage())
                         .genres(movieInformation.getGenre())
-                        .url(imdbUrl)
+                        .url(getUrlWithoutParameters(imdbUrl))
                         .build();
         } catch (final JsonProcessingException e) {
             throw new RuntimeException("Could not read json info from: " + imdbUrl);
         } catch (final IOException e) {
             throw new RuntimeException("Could not connect to: " + imdbUrl);
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Could not refine url");
         }
     }
 
@@ -53,4 +57,12 @@ public class ImdbParserService {
         return CompletableFuture.completedFuture(parse(imdbUrl));
     }
 
+    private String getUrlWithoutParameters(String url) throws URISyntaxException {
+        URI uri = new URI(url);
+        return new URI(uri.getScheme(),
+                       uri.getAuthority(),
+                       uri.getPath(),
+                       null,
+                       uri.getFragment()).toString();
+    }
 }

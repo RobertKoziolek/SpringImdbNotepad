@@ -58,6 +58,7 @@ public class UpdateService {
                 movieRepository.save(movie);
         });
         movieRepository.deleteAll(oldMovies);
+        //TODO use events to allow users to do stuff while update takes place
     }
 
     private Movie map(final CompletableFuture<Movie> future) {

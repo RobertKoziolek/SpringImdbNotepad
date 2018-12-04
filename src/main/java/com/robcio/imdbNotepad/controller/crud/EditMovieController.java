@@ -1,4 +1,4 @@
-package com.robcio.imdbNotepad.controller;
+package com.robcio.imdbNotepad.controller.crud;
 
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.service.MovieService;

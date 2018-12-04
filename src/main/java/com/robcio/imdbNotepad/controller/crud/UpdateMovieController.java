@@ -1,4 +1,4 @@
-package com.robcio.imdbNotepad.controller;
+package com.robcio.imdbNotepad.controller.crud;
 
 import com.robcio.imdbNotepad.service.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;

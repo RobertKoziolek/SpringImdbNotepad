@@ -18,7 +18,7 @@
     <p>Use this to save movies you would like to watch!</p>
 
     <div class="alert alert-light" id="topButtons">
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class="btn-group" role="group">
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
                 Update all
             </button>
@@ -28,6 +28,23 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#genres">
                 Genres
             </button>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Sort
+                </button>
+                <div class="dropdown-menu">
+                    <form th:action="@{/sorting}" th:method="post">
+                        <input type="hidden" name="_method" value="PUT"/>
+                        <input type="hidden" name="view" value="/details"/>
+                        <th:block th:each="sort : ${sortTypes}">
+                            <button type="submit" class="dropdown-item" name="sorting"
+                                    th:value="${sort}" th:text="${sort.label}">
+                                sorting type
+                            </button>
+                        </th:block>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

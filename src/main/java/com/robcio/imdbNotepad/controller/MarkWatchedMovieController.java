@@ -23,5 +23,4 @@ public class MarkWatchedMovieController {
         movieService.markAsWatched(id);
         return "redirect:/";
     }
-
 }

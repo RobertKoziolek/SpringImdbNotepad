@@ -29,5 +29,4 @@ public class EditMovieController {
         movieService.edit(id, movie);
         return "redirect:/";
     }
-
 }

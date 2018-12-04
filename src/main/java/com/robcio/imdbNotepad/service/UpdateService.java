@@ -37,26 +37,35 @@ public class UpdateService {
         logger.debug("Finished");
     }
 
-    private void substituteNewInfo(List<Movie> all, List<CompletableFuture<Movie>> futures) {
-        final Set<String> watched = all.stream()
+    private void substituteNewInfo(List<Movie> oldMovies, List<CompletableFuture<Movie>> futures) {
+        final Set<String> watched = oldMovies.stream()
                                        .filter(m -> Objects.equals(m.getType(), Movie.WATCHED))
                                        .map(Movie::getName)
                                        .collect(Collectors.toSet());
-        try {
-            for (final CompletableFuture<Movie> future : futures) {
-                final Movie movie = future.get();
+
+        final List<Movie> updatedMovies = futures.stream()
+                                          .map(this::map)
+                                          .collect(Collectors.toList());
+        if (updatedMovies.size() != oldMovies.size()){
+            throw new IllegalStateException("Update failed, received diffirent amount of movies than before");
+        }
+        movieRepository.saveAll(updatedMovies);
+        updatedMovies.forEach(movie -> {
                 logger.debug("Saving " + movie.getName());
                 if (watched.contains(movie.getName())) {
                     movie.setType(Movie.WATCHED);
                 }
                 movieRepository.save(movie);
-            }
+        });
+        movieRepository.deleteAll(oldMovies);
+    }
+
+    private Movie map(final CompletableFuture<Movie> future) {
+        try {
+            return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            logger.error("Could not complete update");
-            e.printStackTrace();
+            throw new RuntimeException("Could not map a future to a movie");
         }
-        movieRepository.deleteAll(all);
-        //TODO transaction needed here
     }
 
     private List<CompletableFuture<Movie>> getCompletableFutures(final List<Movie> all) {

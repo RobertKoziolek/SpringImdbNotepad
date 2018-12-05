@@ -25,11 +25,9 @@ public class UpdateEventListener {
     @EventListener
     protected void handleUpdatedMovie(final Movie movie) {
         final Optional<Movie> oldMovieOptional = movieRepository.findByHash(movie.getHash());
-        if(oldMovieOptional.isPresent()) {
+        if (oldMovieOptional.isPresent()) {
             final Movie oldMovie = oldMovieOptional.get();
-            if (oldMovie.getWatched()) {
-                movie.setWatched(true);
-            }
+            movie.setWatched(oldMovie.getWatched());
             movieRepository.delete(oldMovie);
             movieRepository.save(movie);
             logger.debug("Finished updating {}", movie.getName());

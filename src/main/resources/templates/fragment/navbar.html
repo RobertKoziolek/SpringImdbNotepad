@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>IMDb notepad - images</title>
+    <title>IMDb notepad</title>
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
     <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -13,18 +13,19 @@
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <nav th:replace="fragment/navbar.html :: navbar (backView='/', otherView='/details')"></nav>
-    <div th:replace="fragment/navbar.html :: navbarModals"></div>
-    <div class="row">
-        <div class="col-sm-3" th:each="movie : ${movies}" th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''}
-         ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">
-            <h4 th:text="${movie.name} + ' (' + ${movie.datePublished} + ')'">Title</h4>
-            <a target="_blank" th:href="${movie.url}">
-                <img class="img-thumbnail" th:alt="${movie.name}" th:src="${movie.imageUrl}">
-            </a>
-        </div>
+<nav th:fragment="navbar (backView, otherView)" class="navbar sticky-top navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{${otherView}}">IMDb notepad!</a>
+    <div class="btn-group float-right" role="group">
+        <button th:replace="fragment/update_modal.html :: updateModalButton"></button>
+        <button th:replace="fragment/add_movie_modal.html :: addMovieModalButton"></button>
+        <button th:replace="fragment/genres_modal.html :: genresModalButton"></button>
+        <div th:replace="fragment/sort_button.html :: sortButton (backView=${backView})"></div>
     </div>
+</nav>
+<div th:fragment="navbarModals" id="modals">
+    <div th:replace="fragment/update_modal.html :: updateModal (backView=${backView})"></div>
+    <div th:replace="fragment/add_movie_modal.html :: addMovieModal (backView=${backView})"></div>
+    <div th:replace="fragment/genres_modal.html :: genresModal (backView=${backView})"></div>
 </div>
 </body>
 </html>

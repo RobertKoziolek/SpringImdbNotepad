@@ -14,21 +14,8 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="fragment/update_modal.html :: updateModal"></div>
-    <div th:replace="fragment/add_movie_modal.html :: addMovieModal"></div>
-    <div th:replace="fragment/genres_modal.html :: genresModal (backView='/details')"></div>
-    <a th:href="@{/}"><h1>IMDb notepad!</h1></a>
-    <p>Use this to save movies you would like to watch!</p>
-
-    <div class="alert alert-light" id="topButtons">
-        <div class="btn-group" role="group">
-            <button th:replace="fragment/update_modal.html :: updateModalButton"></button>
-            <button th:replace="fragment/add_movie_modal.html :: addMovieModalButton"></button>
-            <button th:replace="fragment/genres_modal.html :: genresModalButton"></button>
-            <div th:replace="fragment/sort_button.html :: sortButton (backView='/details')"></div>
-        </div>
-    </div>
-
+    <nav th:replace="fragment/navbar.html :: navbar (backView='/details', otherView='/')"></nav>
+    <div th:replace="fragment/navbar.html :: navbarModals"></div>
     <div class="well">
         <table class="table">
             <thead class="thead-dark">

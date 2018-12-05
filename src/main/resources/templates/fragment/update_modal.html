@@ -16,7 +16,7 @@
 <button th:fragment="updateModalButton" type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
     Update all
 </button>
-<div th:fragment="updateModal" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+<div th:fragment="updateModal (backView)" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
      aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -33,6 +33,7 @@
             <div class="modal-footer">
                 <form th:action="@{/update}" method="post">
                     <input type="hidden" name="_method" value="PUT"/>
+                    <input type="hidden" name="view" th:value="${backView}"/>
                     <button class="btn btn-primary" type="submit">
                         Confirm
                     </button>

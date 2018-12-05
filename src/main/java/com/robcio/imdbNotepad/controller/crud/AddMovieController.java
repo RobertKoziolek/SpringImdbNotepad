@@ -19,8 +19,8 @@ public class AddMovieController {
     }
 
     @PostMapping("/add")
-    public String add(@RequestParam final String imdbUrl) {
+    public String add(@RequestParam final String imdbUrl, @RequestParam final String view) {
         movieService.add(imdbUrl);
-        return "redirect:/details";
+        return "redirect:" + view;
     }
 }

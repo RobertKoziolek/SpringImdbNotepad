@@ -52,6 +52,7 @@ public class UpdateService {
         movieRepository.saveAll(updatedMovies);
         updatedMovies.forEach(movie -> {
                 logger.debug("Saving " + movie.getName());
+                //TODO think of a unique way to mark movies, name can be duplicated
                 if (watched.contains(movie.getName())) {
                     movie.setType(Movie.WATCHED);
                 }

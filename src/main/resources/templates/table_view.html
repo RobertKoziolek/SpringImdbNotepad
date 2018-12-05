@@ -185,20 +185,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="get" th:action="@{/details}">
-                    <div class="form-check">
-                        <th:block th:each="genre : ${genres}">
-                            <div class="checkbox">
-                                <label th:for="${genre}" th:text="${genre}">Genre</label>
-                                <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}">
-                            </div>
-                        </th:block>
-                        <button class="btn btn-default" type="submit">Submit</button>
+                <form class="form-horizontal" method="post" th:action="@{/genres}">
+                    <input type="hidden" name="_method" value="PUT"/>
+                    <input type="hidden" name="view" value="/details"/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <th:block th:each="genre, iter : ${genres}">
+                                <div class="checkbox" th:if="${iter.index % 2 == 0}">
+                                    <label th:for="${genre}" th:text="${genre}">Genre</label>
+                                    <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}"
+                                           th:checked="${activeGenres.contains(genre)}">
+                                </div>
+                            </th:block>
+                        </div>
+                        <div class="col-md-6">
+                            <th:block th:each="genre, iter : ${genres}">
+                                <div class="checkbox" th:if="${iter.index % 2 == 1}">
+                                    <label th:for="${genre}" th:text="${genre}">Genre</label>
+                                    <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}"
+                                           th:checked="${activeGenres.contains(genre)}">
+                                </div>
+                            </th:block>
+                        </div>
                     </div>
+                    <button class="btn btn-success" type="submit">Submit</button>
+                    <button class="btn btn-info" type="reset">Reset</button>
+                    <button class="btn btn-info" type="button" onclick="uncheckAll();">Clear</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function uncheckAll(){
+       $('input[type="checkbox"]:checked').prop('checked',false)
+    };
+</script>
 </body>
 </html>

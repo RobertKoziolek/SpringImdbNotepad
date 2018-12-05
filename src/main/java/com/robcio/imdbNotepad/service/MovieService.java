@@ -20,14 +20,18 @@ import java.util.stream.Stream;
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final FilterService filterService;
     private final ImdbParserService imdbParserService;
 
     @Setter
     private MovieSorting movieSorting;
 
     @Autowired
-    public MovieService(final MovieRepository movieRepository, final ImdbParserService imdbParserService) {
+    public MovieService(final MovieRepository movieRepository,
+                        final FilterService filterService,
+                        final ImdbParserService imdbParserService) {
         this.movieRepository = movieRepository;
+        this.filterService = filterService;
         this.imdbParserService = imdbParserService;
 
         movieSorting = MovieSorting.NAME;
@@ -38,8 +42,9 @@ public class MovieService {
         movieRepository.save(movie);
     }
 
-    public List<Movie> getAll(final Set<String> genres) {
-        Stream<Movie> stream = getAll().stream();
+    public List<Movie> getAll() {
+        Stream<Movie> stream = findAll().stream();
+        final Set<String> genres = filterService.getGenres();
         if (!SetUtils.isEmpty(genres)) {
             stream = stream.filter(movie -> !Collections.disjoint(movie.getGenres(), genres));
         }
@@ -52,7 +57,7 @@ public class MovieService {
                               .orElseThrow(() -> new RuntimeException("Could not find the movie with id " + id));
     }
 
-    private List<Movie> getAll() {
+    private List<Movie> findAll() {
         return movieRepository.findAll();
     }
 
@@ -77,7 +82,7 @@ public class MovieService {
     }
 
     public Set<String> getDistinctGenres() {
-        final List<Movie> all = getAll();
+        final List<Movie> all = findAll();
         return all.stream()
                   .map(Movie::getGenres)
                   .reduce(new TreeSet<String>() {

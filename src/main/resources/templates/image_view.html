@@ -23,8 +23,8 @@
 
     <div class="row">
         <div class="col-sm-3" th:each="movie : ${movies}" th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''}
-        ${movie.type.equals('WATCHED') ? 'bg-danger' : ''} ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">
-            <h4 th:text="${movie.name} + ' (' + ${movie.dateCreated} + ')'">Title</h4>
+         ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">
+            <h4 th:text="${movie.name} + ' (' + ${movie.datePublished} + ')'">Title</h4>
             <a target="_blank" th:href="${movie.url}">
                 <img class="img-thumbnail" th:alt="${movie.name}" th:src="${movie.imageUrl}">
             </a>

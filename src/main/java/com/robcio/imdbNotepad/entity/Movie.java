@@ -12,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Movie {
-    public static final String WATCHED = "WATCHED";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -35,9 +34,11 @@ public class Movie {
 
     private String duration;
 
-    private String dateCreated;
+    private String datePublished;
 
     private String rating;
 
     private String type;
+
+    private Boolean watched;
 }

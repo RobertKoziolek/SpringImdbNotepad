@@ -23,17 +23,12 @@ public class MovieInformation {
 
     private String duration;
 
-    private String dateCreated;
+    private String datePublished;
 
     private String rating;
 
     @JsonProperty("@type")
     private String type;
-
-    @JsonProperty("review")
-    private void unpackDateCreated(final Map<String,Object> review) {
-        dateCreated = (String)review.get("dateCreated");
-    }
 
     @JsonProperty("aggregateRating")
     private void unpackRating(final Map<String,Object> aggregateRating) {

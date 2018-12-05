@@ -38,18 +38,19 @@ public class ImdbParserService {
             final Elements type = document.getElementsByAttributeValue("type", "application/ld+json");
             final MovieInformation movieInformation = objectMapper.readValue(type.html(), MovieInformation.class);
             final String name = movieInformation.getName();
-            final String dateCreated = movieInformation.getDateCreated();
+            final String datePublished = movieInformation.getDatePublished();
             return Movie.builder()
-                        .hash(movieHasher.getHash(name, dateCreated))
+                        .hash(movieHasher.getHash(name, datePublished))
                         .name(name)
                         .type(movieInformation.getType())
                         .description(movieInformation.getDescription())
                         .duration(movieInformation.getDuration())
-                        .dateCreated(dateCreated)
+                        .datePublished(datePublished)
                         .rating(movieInformation.getRating())
                         .imageUrl(movieInformation.getImage())
                         .genres(movieInformation.getGenre())
                         .url(getUrlWithoutParameters(imdbUrl))
+                        .watched(false)
                         .build();
         } catch (final JsonProcessingException e) {
             throw new RuntimeException("Could not read json info from: " + imdbUrl);

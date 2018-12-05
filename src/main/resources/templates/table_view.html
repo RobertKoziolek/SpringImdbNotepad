@@ -45,8 +45,7 @@
             </thead>
             <tbody>
             <th:block th:each="movie : ${movies}">
-                <tr th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''}
-        ${movie.type.equals('WATCHED') ? 'bg-danger' : ''} ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">
+                <tr th:classappend="${movie.type.equals('Movie') ? 'bg-light' : 'bg-secondary'}">
                     <td>
                         <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
                                 th:data-target="'#' + ${movie.id}"
@@ -76,7 +75,7 @@
                         <span th:text="${movie.genres}">genres</span>
                     </td>
                     <td>
-                        <span th:text="${movie.dateCreated}">date created</span>
+                        <span th:text="${movie.datePublished}">date published</span>
                     </td>
                     <td>
                         <form th:action="@{/edit/__${movie.id}__}" th:method="get">

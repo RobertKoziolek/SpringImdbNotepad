@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class UpdateEventListener {
@@ -24,13 +24,17 @@ public class UpdateEventListener {
 
     @EventListener
     protected void handleUpdatedMovie(final Movie movie) {
-        final Movie oldMovie = movieRepository.findByHash(movie.getHash())
-                                              .orElseThrow(() -> new IllegalStateException("Could not find old movie"));
-        if (Objects.equals(oldMovie.getType(), Movie.WATCHED)) {
-            movie.setType(Movie.WATCHED);
+        final Optional<Movie> oldMovieOptional = movieRepository.findByHash(movie.getHash());
+        if(oldMovieOptional.isPresent()) {
+            final Movie oldMovie = oldMovieOptional.get();
+            if (oldMovie.getWatched()) {
+                movie.setWatched(true);
+            }
+            movieRepository.delete(oldMovie);
+            movieRepository.save(movie);
+            logger.debug("Finished updating {}", movie.getName());
+        } else {
+            logger.error("Update failed for {}, could not find previous record", movie.getName());
         }
-        movieRepository.delete(oldMovie);
-        movieRepository.save(movie);
-        logger.debug("Finished updating {}", movie.getName());
     }
 }

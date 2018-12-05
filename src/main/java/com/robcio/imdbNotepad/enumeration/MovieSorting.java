@@ -13,7 +13,7 @@ public enum MovieSorting {
 
     TYPE("By type (movie/series)", Comparator.comparing(Movie::getType)),
     NAME("By name", Comparator.comparing(Movie::getName)),
-    DATE("By release date", Comparator.comparing(Movie::getDateCreated)),
+    DATE("By release date", Comparator.comparing(Movie::getDatePublished)),
     DURATION("By duration", Comparator.comparing(movie -> {
         final String duration = movie.getDuration();
         return StringUtils.isEmpty(duration) ? "0" : duration;

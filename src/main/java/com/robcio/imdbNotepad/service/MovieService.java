@@ -75,9 +75,8 @@ public class MovieService {
     }
 
     public void markAsWatched(final Long id) {
-        //TODO watched should be a boolean value not overriding type
         final Movie movie = get(id);
-        movie.setType(Movie.WATCHED);
+        movie.setWatched(true);
         movieRepository.save(movie);
     }
 

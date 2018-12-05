@@ -12,10 +12,10 @@ public class AsyncTaskExecutorConfiguration {
     @Bean
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(3);
-        executor.setMaxPoolSize(4);
+        executor.setCorePoolSize(4);
+        executor.setMaxPoolSize(8);
         executor.setQueueCapacity(500);
-        executor.setThreadNamePrefix("ImdbDownloader-");
+        executor.setThreadNamePrefix("AsyncTask-");
         executor.initialize();
         return executor;
     }

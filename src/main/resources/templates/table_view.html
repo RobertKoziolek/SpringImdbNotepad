@@ -14,37 +14,18 @@
 </head>
 <body>
 <div class="container">
+    <div th:replace="fragment/update_modal.html :: updateModal"></div>
+    <div th:replace="fragment/add_movie_modal.html :: addMovieModal"></div>
+    <div th:replace="fragment/genres_modal.html :: genresModal (backView='/details')"></div>
     <a th:href="@{/}"><h1>IMDb notepad!</h1></a>
     <p>Use this to save movies you would like to watch!</p>
 
     <div class="alert alert-light" id="topButtons">
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
-                Update all
-            </button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUser">
-                Add movie
-            </button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#genres">
-                Genres
-            </button>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Sort
-                </button>
-                <div class="dropdown-menu">
-                    <form th:action="@{/sorting}" th:method="post">
-                        <input type="hidden" name="_method" value="PUT"/>
-                        <input type="hidden" name="view" value="/details"/>
-                        <th:block th:each="sort : ${sortTypes}">
-                            <button type="submit" class="dropdown-item" name="sorting"
-                                    th:value="${sort}" th:text="${sort.label}">
-                                sorting type
-                            </button>
-                        </th:block>
-                    </form>
-                </div>
-            </div>
+            <button th:replace="fragment/update_modal.html :: updateModalButton"></button>
+            <button th:replace="fragment/add_movie_modal.html :: addMovieModalButton"></button>
+            <button th:replace="fragment/genres_modal.html :: genresModalButton"></button>
+            <div th:replace="fragment/sort_button.html :: sortButton (backView='/details')"></div>
         </div>
     </div>
 
@@ -118,108 +99,5 @@
         </table>
     </div>
 </div>
-
-<!--modal for updating-->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update all</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>This action will redownload all movies info.</p>
-                <p>This action might take a while.</p>
-            </div>
-            <div class="modal-footer">
-                <form th:action="@{/update}" method="post">
-                    <input type="hidden" name="_method" value="PUT"/>
-                    <button class="btn btn-primary" type="submit">
-                        Confirm
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--modal for movie addition-->
-<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUserLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserLabel">Add a movie</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="post" th:action="@{/add}">
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <input class="form-control" name="imdbUrl" placeholder="IMDB url" type="text">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--modal for genres-->
-<div class="modal fade" id="genres" tabindex="-1" role="dialog" aria-labelledby="genresLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="genresLabel">Choose genres</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="post" th:action="@{/genres}">
-                    <input type="hidden" name="_method" value="PUT"/>
-                    <input type="hidden" name="view" value="/details"/>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <th:block th:each="genre, iter : ${genres}">
-                                <div class="checkbox" th:if="${iter.index % 2 == 0}">
-                                    <label th:for="${genre}" th:text="${genre}">Genre</label>
-                                    <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}"
-                                           th:checked="${activeGenres.contains(genre)}">
-                                </div>
-                            </th:block>
-                        </div>
-                        <div class="col-md-6">
-                            <th:block th:each="genre, iter : ${genres}">
-                                <div class="checkbox" th:if="${iter.index % 2 == 1}">
-                                    <label th:for="${genre}" th:text="${genre}">Genre</label>
-                                    <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}"
-                                           th:checked="${activeGenres.contains(genre)}">
-                                </div>
-                            </th:block>
-                        </div>
-                    </div>
-                    <button class="btn btn-success" type="submit">Submit</button>
-                    <button class="btn btn-info" type="reset">Reset</button>
-                    <button class="btn btn-info" type="button" onclick="uncheckAll();">Clear</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    function uncheckAll(){
-       $('input[type="checkbox"]:checked').prop('checked',false)
-    };
-</script>
 </body>
 </html>

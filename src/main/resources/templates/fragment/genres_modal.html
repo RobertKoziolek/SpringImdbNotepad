@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>IMDb notepad</title>
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<button th:fragment="genresModalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#genresModal">
+    Genres
+</button>
+<div th:fragment="genresModal (backView)" class="modal fade" id="genresModal" tabindex="-1" role="dialog"
+     aria-labelledby="genresLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="genresLabel">Choose genres</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" th:action="@{/genres}">
+                    <input type="hidden" name="_method" value="PUT"/>
+                    <input type="hidden" name="view" th:value="${backView}"/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <th:block th:each="genre, iter : ${genres}">
+                                <div class="checkbox" th:if="${iter.index % 2 == 0}">
+                                    <label th:for="${genre}" th:text="${genre}">Genre</label>
+                                    <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}"
+                                           th:checked="${activeGenres.contains(genre)}">
+                                </div>
+                            </th:block>
+                        </div>
+                        <div class="col-md-6">
+                            <th:block th:each="genre, iter : ${genres}">
+                                <div class="checkbox" th:if="${iter.index % 2 == 1}">
+                                    <label th:for="${genre}" th:text="${genre}">Genre</label>
+                                    <input name="genres" type="checkbox" th:id="${genre}" th:value="${genre}"
+                                           th:checked="${activeGenres.contains(genre)}">
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" type="submit">Submit</button>
+                    <button class="btn btn-info" type="reset">Reset</button>
+                    <button class="btn btn-info" type="button" onclick="uncheckAll();">Clear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+    function uncheckAll(){
+       $('input[type="checkbox"]:checked').prop('checked',false)
+    };
+    </script>
+</div>
+</body>
+</html>

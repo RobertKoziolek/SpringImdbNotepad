@@ -21,6 +21,6 @@ public class RemoveMovieController {
     @DeleteMapping("/remove/{id}")
     public String remove(@PathVariable final Long id) {
         movieService.remove(id);
-        return "redirect:/";
+        return "redirect:/details";
     }
 }

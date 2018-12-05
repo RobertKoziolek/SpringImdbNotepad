@@ -27,6 +27,6 @@ public class EditMovieController {
     @PutMapping("/edit/{id}")
     public String adjustLanguage(@PathVariable final Long id, @ModelAttribute Movie movie) {
         movieService.edit(id, movie);
-        return "redirect:/";
+        return "redirect:/details";
     }
 }

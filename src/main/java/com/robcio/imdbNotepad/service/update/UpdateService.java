@@ -33,8 +33,7 @@ public class UpdateService {
     }
 
     public void validateForUpdate(){
-        futureList.removeIf(Future::isDone);
-        if (!futureList.isEmpty()) {
+        if (isUpdating()) {
             throw new IllegalStateException("Previous update not done");
         }
     }
@@ -48,4 +47,8 @@ public class UpdateService {
         logger.debug("Updating {} movies", movies.size());
     }
 
+    public boolean isUpdating() {
+        futureList.removeIf(Future::isDone);
+        return !futureList.isEmpty();
+    }
 }

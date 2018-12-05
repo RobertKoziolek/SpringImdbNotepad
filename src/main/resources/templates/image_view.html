@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <nav th:replace="fragment/navbar.html :: navbar (backView='/', otherView='/details')"></nav>
-    <div th:replace="fragment/navbar.html :: navbarModals"></div>
+    <div th:replace="fragment/navbar.html :: navbarModals (backView='/')"></div>
     <div class="row">
         <div class="col-sm-3" th:each="movie : ${movies}" th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''}
          ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">

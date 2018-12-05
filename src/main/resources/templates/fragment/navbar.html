@@ -22,7 +22,7 @@
         <div th:replace="fragment/sort_button.html :: sortButton (backView=${backView})"></div>
     </div>
 </nav>
-<div th:fragment="navbarModals" id="modals">
+<div th:fragment="navbarModals (backView)" id="modals">
     <div th:replace="fragment/update_modal.html :: updateModal (backView=${backView})"></div>
     <div th:replace="fragment/add_movie_modal.html :: addMovieModal (backView=${backView})"></div>
     <div th:replace="fragment/genres_modal.html :: genresModal (backView=${backView})"></div>

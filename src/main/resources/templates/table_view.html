@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <nav th:replace="fragment/navbar.html :: navbar (backView='/details', otherView='/')"></nav>
-    <div th:replace="fragment/navbar.html :: navbarModals"></div>
+    <div th:replace="fragment/navbar.html :: navbarModals (backView='/details')"></div>
     <div class="well">
         <table class="table">
             <thead class="thead-dark">
@@ -35,13 +35,13 @@
                 <tr th:classappend="${movie.type.equals('Movie') ? 'bg-light' : 'bg-secondary'}">
                     <td>
                         <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
-                                th:data-target="'#' + ${movie.id}"
+                                th:data-target="'#' + ${movie.id}"  th:disabled="${editDisabled}"
                                 data-toggle="collapse" type="button">
                             remove
                         </button>
                         <div class="collapse" th:id="${movie.id}">
                             <form th:action="@{/remove/__${movie.id}__}" th:method="delete">
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn btn-danger" th:disabled="${editDisabled}">
                                     <span class="glyphicon glyphicon-remove">confirm</span>
                                 </button>
                             </form>
@@ -62,11 +62,11 @@
                         <span th:text="${movie.genres}">genres</span>
                     </td>
                     <td>
-                        <span th:text="${movie.datePublished}">date published</span>
+                        <span th:text="${#strings.substring(movie.datePublished,0,4)} ">date published</span>
                     </td>
                     <td>
                         <form th:action="@{/edit/__${movie.id}__}" th:method="get">
-                            <button type="submit" class="btn btn-info">
+                            <button type="submit" class="btn btn-info" th:disabled="${editDisabled}">
                                 <span class="glyphicon glyphicon-pencil">edit</span>
                             </button>
                         </form>
@@ -74,7 +74,7 @@
                     <td>
                         <form th:action="@{/watched/__${movie.id}__}" th:method="post">
                             <input type="hidden" name="_method" value="PUT"/>
-                            <button type="submit" class="btn btn-info">
+                            <button type="submit" class="btn btn-info" th:disabled="${editDisabled}">
                                 <span class="glyphicon glyphicon-pencil">watched</span>
                             </button>
                         </form>

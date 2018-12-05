@@ -18,7 +18,7 @@ public enum MovieSorting {
         final String duration = movie.getDuration();
         return StringUtils.isEmpty(duration) ? "0" : duration;
     })),
-    RATING("By rating", Comparator.comparing(Movie::getRating));
+    RATING("By rating", Comparator.comparing(Movie::getRating).reversed());
 
     private final String label;
     private final Comparator<Movie> comparator;

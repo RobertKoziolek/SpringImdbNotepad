@@ -14,8 +14,8 @@
 </head>
 <body>
 <div class="container">
-    <nav th:replace="fragment/navbar.html :: navbar (backView='/details', otherView='/')"></nav>
-    <div th:replace="fragment/navbar.html :: navbarModals (backView='/details')"></div>
+    <nav th:replace="fragment/navbar.html :: navbar (backView='/table')"></nav>
+    <div th:replace="fragment/navbar.html :: navbarModals (backView='/table')"></div>
     <div class="well">
         <table class="table">
             <thead class="thead-dark">
@@ -37,7 +37,7 @@
                         <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
                                 th:data-target="'#' + ${movie.id}"  th:disabled="${editDisabled}"
                                 data-toggle="collapse" type="button">
-                            remove
+                            <span class="glyphicon glyphicon-remove">remove</span>
                         </button>
                         <div class="collapse" th:id="${movie.id}">
                             <form th:action="@{/remove/__${movie.id}__}" th:method="delete">

@@ -14,7 +14,7 @@ public class TableMovieController extends MovieViewController{
     @Autowired
     private UpdateService updateService;
 
-    @GetMapping("/details")
+    @GetMapping("/table")
     public String showTableView(final Model model) {
         prepareModel(model);
         model.addAttribute("editDisabled", updateService.isUpdating());

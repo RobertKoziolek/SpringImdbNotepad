@@ -13,8 +13,24 @@
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav th:fragment="navbar (backView, otherView)" class="navbar sticky-top navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{${otherView}}">IMDb notepad!</a>
+<nav th:fragment="navbar (backView)" class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{${backView}}">IMDb notepad!</a>
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarId"
+            aria-controls="navbarId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarId">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" th:href="@{/table}" th:classappend="${backView == '/table'} ? 'active' : ''">
+                Table
+            </a>
+            <a class="nav-item nav-link" th:href="@{/tiles}" th:classappend="${backView == ('/tiles')} ? 'active' : ''">
+                Tiles
+            </a>
+        </div>
+    </div>
     <div class="btn-group float-right" role="group">
         <button th:replace="fragment/update_modal.html :: updateModalButton"></button>
         <button th:replace="fragment/add_movie_modal.html :: addMovieModalButton"></button>

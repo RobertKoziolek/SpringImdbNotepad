@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class ImageMovieController extends MovieViewController{
+public class TilesViewController extends MovieViewController{
 
-    @GetMapping("/")
-    public String showImageView(final Model model) {
+    @GetMapping("/tiles")
+    public String showTilesView(final Model model) {
         prepareModel(model);
-        return "image_view";
+        return "tiles_view";
     }
 }

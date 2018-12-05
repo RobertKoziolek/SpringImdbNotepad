@@ -17,6 +17,9 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true, length = 200)
+    private String hash;
+
     private String name;
 
     private String url;
@@ -26,8 +29,8 @@ public class Movie {
     private String description;
 
     @ElementCollection
-    @CollectionTable(name="Genres", joinColumns=@JoinColumn(name="movie_id"))
-    @Column(name="genre")
+    @CollectionTable(name = "Genres", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "genre")
     private Set<String> genres;
 
     private String duration;

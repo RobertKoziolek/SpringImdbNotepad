@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.response.MovieInformation;
+import com.robcio.imdbNotepad.util.MovieHasher;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -21,9 +22,13 @@ public class ImdbParserService {
 
     private final ObjectMapper objectMapper;
 
+    private final MovieHasher movieHasher;
+
     public ImdbParserService() {
         objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+
+        movieHasher = new MovieHasher();
     }
 
     public Movie parse(final String imdbUrl) {
@@ -32,12 +37,15 @@ public class ImdbParserService {
                                            .get();
             final Elements type = document.getElementsByAttributeValue("type", "application/ld+json");
             final MovieInformation movieInformation = objectMapper.readValue(type.html(), MovieInformation.class);
+            final String name = movieInformation.getName();
+            final String dateCreated = movieInformation.getDateCreated();
             return Movie.builder()
-                        .name(movieInformation.getName())
+                        .hash(movieHasher.getHash(name, dateCreated))
+                        .name(name)
                         .type(movieInformation.getType())
                         .description(movieInformation.getDescription())
                         .duration(movieInformation.getDuration())
-                        .dateCreated(movieInformation.getDateCreated())
+                        .dateCreated(dateCreated)
                         .rating(movieInformation.getRating())
                         .imageUrl(movieInformation.getImage())
                         .genres(movieInformation.getGenre())

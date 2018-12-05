@@ -40,7 +40,7 @@ public class UpdateService {
     private void substituteNewInfo(List<Movie> oldMovies, List<CompletableFuture<Movie>> futures) {
         final Set<String> watched = oldMovies.stream()
                                        .filter(m -> Objects.equals(m.getType(), Movie.WATCHED))
-                                       .map(Movie::getName)
+                                       .map(Movie::getHash)
                                        .collect(Collectors.toSet());
 
         final List<Movie> updatedMovies = futures.stream()
@@ -52,8 +52,7 @@ public class UpdateService {
         movieRepository.saveAll(updatedMovies);
         updatedMovies.forEach(movie -> {
                 logger.debug("Saving " + movie.getName());
-                //TODO think of a unique way to mark movies, name can be duplicated
-                if (watched.contains(movie.getName())) {
+                if (watched.contains(movie.getHash())) {
                     movie.setType(Movie.WATCHED);
                 }
                 movieRepository.save(movie);

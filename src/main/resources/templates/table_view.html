@@ -31,10 +31,11 @@
             </thead>
             <tbody>
             <th:block th:each="movie : ${movies}">
-                <tr th:classappend="${movie.type.equals('Movie') ? 'bg-light' : 'bg-secondary'}">
+                <tr th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : 'bg-white'}
+                ${movie.watched ? 'border border-danger' : ''}|">
                     <td>
                         <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
-                                th:data-target="'#' + ${movie.id}"  th:disabled="${editDisabled}"
+                                th:data-target="'#' + ${movie.id}" th:disabled="${editDisabled}"
                                 data-toggle="collapse" type="button">
                             <span class="glyphicon glyphicon-remove">remove</span>
                         </button>
@@ -51,7 +52,7 @@
                     </td>
                     <td>
                         <a target="_blank" th:href="${movie.url}">
-                            <span th:text="${movie.name}">name</span>
+                            <span th:text="${movie.name} + (${movie.watched} ? ' [watched]' : '')">name</span>
                         </a>
                     </td>
                     <td>
@@ -73,8 +74,9 @@
                     <td>
                         <form th:action="@{/watched/__${movie.id}__}" th:method="post">
                             <input type="hidden" name="_method" value="PUT"/>
+                            <input type="hidden" name="watched" th:value="${!movie.watched}"/>
                             <button type="submit" class="btn btn-info" th:disabled="${editDisabled}">
-                                <span class="glyphicon glyphicon-pencil">watched</span>
+                                <span th:text="${movie.watched} ? 'Unwatch' : 'Watched'"></span>
                             </button>
                         </form>
                     </td>

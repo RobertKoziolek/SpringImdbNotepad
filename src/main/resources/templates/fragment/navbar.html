@@ -1,17 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>IMDb notepad</title>
-    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
-    <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</head>
-<body>
 <nav th:fragment="navbar (backView)" class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" th:href="@{${backView}}">IMDb notepad!</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarId"
@@ -33,6 +21,7 @@
         <button th:replace="fragment/add_movie_modal.html :: addMovieModalButton"></button>
         <button th:replace="fragment/genres_modal.html :: genresModalButton"></button>
         <div th:replace="fragment/sort_button.html :: sortButton (backView=${backView})"></div>
+        <div th:replace="fragment/watched_sort_button.html :: watchedSortButton (backView=${backView})"></div>
     </div>
 </nav>
 <div th:fragment="navbarModals (backView)" id="modals">
@@ -40,5 +29,4 @@
     <div th:replace="fragment/add_movie_modal.html :: addMovieModal (backView=${backView})"></div>
     <div th:replace="fragment/genres_modal.html :: genresModal (backView=${backView})"></div>
 </div>
-</body>
 </html>

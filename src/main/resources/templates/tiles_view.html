@@ -17,7 +17,7 @@
     <div th:replace="fragment/navbar.html :: navbarModals (backView='/tiles')"></div>
     <div class="row">
         <div class="col-sm-3" th:each="movie : ${movies}" th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''}
-         ${movie.type.equals('TVSeries') ? 'bg-secondary' : ''}|">
+         ${movie.type.equals('TVSeries') ? 'bg-white' : ''} ${movie.watched ? 'border border-danger' : ''}|">
             <span class="text-center h5" th:text="${movie.name}">Title</span>
             <span class="float-right font-weight-light" th:text="${movie.datePublished}">date published</span>
             <a target="_blank" th:href="${movie.url}">

@@ -5,15 +5,15 @@
     <title>IMDb notepad</title>
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
-    <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<button th:fragment="addMovieModalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMovie">
+<button th:fragment="addMovieModalButton" type="button" class="btn btn-primary" data-toggle="modal"
+        data-target="#addMovie">
     Add movie
 </button>
 <div th:fragment="addMovieModal (backView)" class="modal fade" id="addMovie" tabindex="-1" role="dialog"
@@ -31,16 +31,39 @@
                     <input type="hidden" name="view" th:value="${backView}"/>
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input class="form-control" name="imdbUrl" placeholder="IMDB url" type="text">
+                            <input class="form-control" name="imdbUrl" placeholder="IMDB url" type="url"
+                                   oninput="checkIfExists(this);">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="submit">Submit</button>
+                                <button id="addMovieId" disabled="disabled" class="btn btn-outline-secondary" type="submit">
+                                    Submit
+                                </button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
+            <div class="modal-footer">
+                <span id="errorMessage"></span>
+            </div>
         </div>
     </div>
+    <script>
+        function checkIfExists(input) {
+            var url = input.value;
+            $.ajax({
+                type: 'PUT',
+                url: '/add/check?imdbUrl='+url,
+                success: function(receive) {
+                    document.getElementById("addMovieId").disabled = receive;
+                    document.getElementById("errorMessage").textContent=(receive ? "Cannot add this url, might already be saved." : "");
+                },
+                error: function() {
+                    document.getElementById("addMovieId").disabled = false;
+                    console.log("Could not get check response");
+                }
+            });
+        }
+    </script>
 </div>
 </body>
 </html>

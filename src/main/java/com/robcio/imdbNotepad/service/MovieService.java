@@ -3,12 +3,14 @@ package com.robcio.imdbNotepad.service;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.enumeration.MovieSorting;
 import com.robcio.imdbNotepad.repository.MovieRepository;
+import com.robcio.imdbNotepad.service.util.UrlRefiner;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.util.SetUtils;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -89,5 +91,10 @@ public class MovieService {
                       genres1.addAll(genres2);
                       return genres1;
                   });
+    }
+
+    public boolean exists(final String imdbUrl) throws URISyntaxException {
+        return movieRepository.findByUrl(UrlRefiner.refine(imdbUrl))
+                              .isPresent();
     }
 }

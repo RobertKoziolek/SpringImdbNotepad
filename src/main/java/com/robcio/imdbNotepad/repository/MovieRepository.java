@@ -13,5 +13,5 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
     @Override
     List<Movie> findAll();
 
-    Optional<Movie> findByHash(String hash);
+    Optional<Movie> findByUrl(String url);
 }

@@ -16,9 +16,6 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true, length = 200)
-    private String hash;
-
     private String name;
 
     private String url;

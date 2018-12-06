@@ -24,7 +24,7 @@ public class UpdateEventListener {
 
     @EventListener
     protected void handleUpdatedMovie(final Movie movie) {
-        final Optional<Movie> oldMovieOptional = movieRepository.findByHash(movie.getHash());
+        final Optional<Movie> oldMovieOptional = movieRepository.findByUrl(movie.getUrl());
         if (oldMovieOptional.isPresent()) {
             final Movie oldMovie = oldMovieOptional.get();
             movie.setWatched(oldMovie.getWatched());

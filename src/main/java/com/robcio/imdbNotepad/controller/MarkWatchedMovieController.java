@@ -18,6 +18,7 @@ public class MarkWatchedMovieController {
         this.movieService = movieService;
     }
 
+    //TODO if watched it can have a sort of diffirent border in view
     @PutMapping("/watched/{id}")
     public String markAsWatched(@PathVariable final Long id) {
         movieService.markAsWatched(id);

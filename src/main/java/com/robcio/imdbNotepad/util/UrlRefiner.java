@@ -1,4 +1,4 @@
-package com.robcio.imdbNotepad.service.util;
+package com.robcio.imdbNotepad.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;

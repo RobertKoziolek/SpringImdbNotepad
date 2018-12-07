@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.response.MovieInformation;
-import com.robcio.imdbNotepad.service.util.UrlRefiner;
+import com.robcio.imdbNotepad.util.UrlRefiner;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;

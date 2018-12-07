@@ -2,7 +2,7 @@ package com.robcio.imdbNotepad.service;
 
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.repository.MovieRepository;
-import com.robcio.imdbNotepad.service.util.UrlRefiner;
+import com.robcio.imdbNotepad.util.UrlRefiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

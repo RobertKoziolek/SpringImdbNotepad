@@ -11,8 +11,8 @@ import java.util.Comparator;
 @Getter
 public enum MovieSorting {
 
-    TYPE("By type (movie/series)", Comparator.comparing(Movie::getType)),
     NAME("By name", Comparator.comparing(Movie::getName)),
+    TYPE("By type (movie/series)", Comparator.comparing(Movie::getType)),
     DATE("By release date", Comparator.comparing(Movie::getDatePublished)),
     DURATION("By duration", Comparator.comparing(movie -> {
         final String duration = movie.getDuration();
@@ -22,4 +22,8 @@ public enum MovieSorting {
 
     private final String label;
     private final Comparator<Movie> comparator;
+
+    public static MovieSorting getDefault(){
+        return NAME;
+    }
 }

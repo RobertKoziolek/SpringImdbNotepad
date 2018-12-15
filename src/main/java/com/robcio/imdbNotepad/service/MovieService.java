@@ -3,7 +3,10 @@ package com.robcio.imdbNotepad.service;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.repository.MovieRepository;
 import com.robcio.imdbNotepad.util.UrlRefiner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -14,6 +17,7 @@ import java.util.stream.Stream;
 
 @Component
 public class MovieService {
+    private static final Logger logger = LoggerFactory.getLogger(MovieService.class);
 
     private final MovieRepository movieRepository;
     private final FilterService filterService;
@@ -33,7 +37,13 @@ public class MovieService {
 
     public void add(final String imdbUrl) {
         final Movie movie = imdbParserService.parse(imdbUrl);
+        logger.debug("Adding {}", movie.getName());
         movieRepository.save(movie);
+    }
+
+    @Async
+    public void addAsync(final String imdbUrl) {
+        add(imdbUrl);
     }
 
     public List<Movie> getAll() {

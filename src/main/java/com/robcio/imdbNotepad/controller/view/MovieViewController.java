@@ -14,6 +14,8 @@ abstract class MovieViewController {
     @Autowired
     private FilterService filterService;
 
+    //TODO trailer if available
+    //TODO in case of no movies present in db should not even let genres modal open. Add some info to add movies
     void prepareModel(final Model model) {
         model.addAttribute("movies", movieService.getAll());
         model.addAttribute("genres", filterService.getDistinctGenres());

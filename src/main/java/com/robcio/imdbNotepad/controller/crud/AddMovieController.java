@@ -1,27 +1,38 @@
 package com.robcio.imdbNotepad.controller.crud;
 
+import com.robcio.imdbNotepad.service.ImdbParserService;
 import com.robcio.imdbNotepad.service.MovieService;
+import com.robcio.imdbNotepad.util.UrlRefiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class AddMovieController {
 
     private final MovieService movieService;
+    private final ImdbParserService imdbParserService;
 
     @Autowired
-    public AddMovieController(final MovieService movieService) {
+    public AddMovieController(final MovieService movieService, final ImdbParserService imdbParserService) {
         this.movieService = movieService;
+        this.imdbParserService = imdbParserService;
     }
 
     @PostMapping("/add")
     public String add(@RequestParam final String imdbUrl, @RequestParam final String view) {
-        //TODO multi add
         movieService.add(imdbUrl);
+        return "redirect:" + view;
+    }
+
+    @PostMapping("/add/multi")
+    public String addMulti(@RequestParam final String imdbUrls, @RequestParam final String view) {
+        final List<String> split = UrlRefiner.split(imdbUrls);
+        split.forEach(movieService::addAsync);
         return "redirect:" + view;
     }
 

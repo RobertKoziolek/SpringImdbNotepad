@@ -15,20 +15,48 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="post" th:action="@{/add}">
-                    <input type="hidden" name="view" th:value="${backView}"/>
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <input class="form-control" name="imdbUrl" placeholder="IMDB url" type="url"
-                                   oninput="validate(this);">
-                            <div class="input-group-append">
-                                <button id="addMovieId" disabled="disabled" class="btn btn-outline-secondary" type="submit">
-                                    Submit
-                                </button>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a class="btn btn-light" data-toggle="tab" href="#single" onclick="return clearInputs();">Single</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-light" data-toggle="tab" href="#multi" onclick="return clearInputs();">Multi</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="single">
+                        <form class="form-horizontal" method="post" th:action="@{/add}">
+                            <input type="hidden" name="view" th:value="${backView}"/>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input class="form-control" name="imdbUrl" placeholder="IMDB url" type="url"
+                                           id="addMovieSingleInput" oninput="validate(this);">
+                                    <div class="input-group-append">
+                                        <button id="addMovieSingle" disabled="disabled" class="btn btn-outline-secondary" type="submit">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
+                    <div class="tab-pane fade" id="multi">
+                        <form class="form-horizontal" method="post" th:action="@{/add/multi}">
+                            <input type="hidden" name="view" th:value="${backView}"/>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <textarea class="form-control" name="imdbUrls" placeholder="IMDB urls, keep each in separate line"
+                                              id="addMovieMultiInput" rows="3"></textarea>
+                                    <div class="input-group-append">
+                                        <button id="addMovieMulti" class="btn btn-outline-secondary" type="submit">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <span id="errorMessage"></span>
@@ -42,14 +70,20 @@
                 type: 'PUT',
                 url: '/add/check?imdbUrl='+url,
                 success: function(receive) {
-                    document.getElementById("addMovieId").disabled = receive;
+                    document.getElementById("addMovieSingle").disabled = receive;
                     document.getElementById("errorMessage").textContent=(receive ? "Cannot add this url, might already be saved." : "");
                 },
                 error: function() {
-                    document.getElementById("addMovieId").disabled = false;
+                    document.getElementById("addMovieSingle").disabled = false;
                     console.log("Could not get check response");
                 }
             });
+        }
+        function clearInputs() {
+            document.getElementById("errorMessage").textContent="";
+            document.getElementById("addMovieSingleInput").value="";
+            document.getElementById("addMovieMultiInput").value="";
+            return true;
         }
     </script>
 </div>

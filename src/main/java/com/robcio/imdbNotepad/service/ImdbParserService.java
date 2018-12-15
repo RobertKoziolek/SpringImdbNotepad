@@ -9,12 +9,10 @@ import com.robcio.imdbNotepad.util.UrlRefiner;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.concurrent.CompletableFuture;
 
 @Component
 public class ImdbParserService {
@@ -53,10 +51,5 @@ public class ImdbParserService {
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Could not refine url");
         }
-    }
-
-    @Async
-    public CompletableFuture<Movie> parseAsync(final String imdbUrl) {
-        return CompletableFuture.completedFuture(parse(imdbUrl));
     }
 }

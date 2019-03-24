@@ -24,6 +24,13 @@
                 <img class="img-thumbnail" th:alt="${movie.name}" th:title="${movie.description}"
                      th:src="${movie.imageUrl}">
             </a>
+            <form id="removeMovieForm" th:action="@{/remove/__${movie.id}__}" th:method="delete">
+                <input type="hidden" name="view" value="/tiles"/>
+                <a th:hidden="${editDisabled}" href="javascript:{}"
+                   onclick="document.getElementById('removeMovieForm').submit();">
+                    <span class="text-center small">[remove]</span>
+                </a>
+            </form>
         </div>
     </div>
 </div>

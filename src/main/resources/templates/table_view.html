@@ -41,6 +41,7 @@
                         </button>
                         <div class="collapse" th:id="${movie.id}">
                             <form th:action="@{/remove/__${movie.id}__}" th:method="delete">
+                                <input type="hidden" name="view" value="/table"/>
                                 <button type="submit" class="btn btn-danger" th:disabled="${editDisabled}">
                                     <span class="glyphicon glyphicon-remove">confirm</span>
                                 </button>

@@ -1,6 +1,5 @@
 package com.robcio.imdbNotepad.controller.crud;
 
-import com.robcio.imdbNotepad.service.ImdbParserService;
 import com.robcio.imdbNotepad.service.MovieService;
 import com.robcio.imdbNotepad.util.UrlRefiner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,10 @@ import java.util.List;
 public class AddMovieController {
 
     private final MovieService movieService;
-    private final ImdbParserService imdbParserService;
 
     @Autowired
-    public AddMovieController(final MovieService movieService, final ImdbParserService imdbParserService) {
+    public AddMovieController(final MovieService movieService) {
         this.movieService = movieService;
-        this.imdbParserService = imdbParserService;
     }
 
     @PostMapping("/add")

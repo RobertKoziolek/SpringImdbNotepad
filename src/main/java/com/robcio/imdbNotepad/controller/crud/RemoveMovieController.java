@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -19,8 +20,8 @@ public class RemoveMovieController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public String remove(@PathVariable final Long id) {
+    public String remove(@PathVariable final Long id, @RequestParam final String view) {
         movieService.remove(id);
-        return "redirect:/table";
+        return "redirect:" + view;
     }
 }

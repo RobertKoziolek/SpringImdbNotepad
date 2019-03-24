@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Controller
 @RequestMapping("/")
@@ -29,7 +30,8 @@ public class AddMovieController {
     @PostMapping("/add/multi")
     public String addMulti(@RequestParam final String imdbUrls, @RequestParam final String view) {
         final List<String> split = UrlRefiner.split(imdbUrls);
-        split.forEach(movieService::addAsync);
+        final Predicate<String> check = this::check;
+        split.stream().distinct().filter(check.negate()).forEach(movieService::addAsync);
         return "redirect:" + view;
     }
 

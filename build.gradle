@@ -7,7 +7,6 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath('se.transmode.gradle:gradle-docker:1.2')
     }
 }
 
@@ -16,7 +15,6 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'docker'
 
 group = 'com.robcio'
 version = '0.0.1-SNAPSHOT'
@@ -44,26 +42,13 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
-task unpack(type: Copy) {
-    dependsOn bootJar
-    from(zipTree(tasks.bootJar.outputs.files.singleFile))
-    into("build/dependency")
-}
-
-jar () {
+jar() {
     baseName = "imdbnotepad"
     group = "build"
     version = "0.0.1-SNAPSHOT"
     manifest { attributes "Main-Class": "com.robcio.imdbNotepad.ImdbNotepadApplication" }
 }
 
-task buildDocker(type: Docker, dependsOn: build, group: 'application') {
-    applicationName = jar.baseName
-    dockerfile = file('src/main/docker/Dockerfile')
-    doFirst {
-        copy {
-            from jar
-            into stageDir
-        }
-    }
+bootWar {
+    archiveName 'IMDb-Notepad.war'
 }

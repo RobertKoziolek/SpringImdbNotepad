@@ -7,7 +7,6 @@ import java.util.List;
 
 public class UrlRefiner {
 
-
     static public String refine(final String url) throws URISyntaxException {
         URI uri = new URI(url);
         return new URI(uri.getScheme(),

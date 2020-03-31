@@ -18,12 +18,15 @@ public enum MovieSorting {
         final String duration = movie.getDuration();
         return StringUtils.isEmpty(duration) ? "0" : duration;
     })),
-    RATING("By rating", Comparator.comparing(Movie::getRating).reversed());
+    RATING("By rating", Comparator.comparing(movie -> {
+        final String rating = movie.getRating();
+        return StringUtils.isEmpty(rating) ? "0" : rating;
+    }));
 
     private final String label;
     private final Comparator<Movie> comparator;
 
-    public static MovieSorting getDefault(){
+    public static MovieSorting getDefault() {
         return NAME;
     }
 }

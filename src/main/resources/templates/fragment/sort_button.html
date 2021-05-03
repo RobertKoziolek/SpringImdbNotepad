@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <div th:fragment="sortButton (backView)" class="btn-group" role="group">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" th:text="#{nav.button.sort}">
         Sort
     </button>
     <div class="dropdown-menu">
@@ -10,7 +10,7 @@
             <input type="hidden" name="view" th:value="${backView}"/>
             <th:block th:each="sort : ${sortTypes}">
                 <button type="submit" class="dropdown-item" name="sorting"
-                        th:value="${sort}" th:text="${sort.label}">
+                        th:value="${sort}" th:text="#{${sort.label}}">
                     sorting type
                 </button>
             </th:block>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>IMDb notepad</title>
+    <title th:text="#{logo.title}">IMDb notepad</title>
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
     <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
@@ -15,9 +15,27 @@
 <div class="container">
     <nav th:replace="fragment/navbar.html :: navbar (backView='/configuration')"></nav>
     <div th:replace="fragment/navbar.html :: navbarModals (backView='/configuration')"></div>
-    <div class="well">
+    <div class="well" th:text="#{view.config.description}">
         This is the configuration page. Configurable features to be added.
     </div>
+    <div class="well">
+        <span th:text="#{lang.change}"></span>:
+        <select id="locales">
+            <option value=""></option>
+            <option value="en" th:text="#{lang.eng}"></option>
+            <option value="pl" th:text="#{lang.pl}"></option>
+        </select>
+    </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#locales").change(function () {
+        var selectedOption = $('#locales').val();
+        if (selectedOption != ''){
+            window.location.replace('configuration?lang=' + selectedOption);
+        }
+    });
+});
+</script>
 </body>
 </html>

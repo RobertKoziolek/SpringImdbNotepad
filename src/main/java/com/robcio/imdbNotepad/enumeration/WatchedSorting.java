@@ -7,11 +7,11 @@ import lombok.Getter;
 @Getter
 public enum WatchedSorting {
 
-    NO_MATTER("No action"),
-    ONLY_WATCHED("Show only"),
-    HIDE("Hide"),
-    FIRST("Show first"),
-    LAST("Show last");
+    NO_MATTER("watched.none"),
+    ONLY_WATCHED("watched.show"),
+    HIDE("watched.hide"),
+    FIRST("watched.first"),
+    LAST("watched.last");
 
     private final String label;
 

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>IMDb notepad</title>
+    <title th:text="#{logo.title}">IMDb notepad</title>
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
     <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
@@ -20,7 +20,7 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Rating</th>
+                <th scope="col" th:text="#{view.table.rating}">Rating</th>
                 <th scope="col">Name</th>
                 <th scope="col">Type</th>
                 <th scope="col">Genres</th>
@@ -37,13 +37,13 @@
                         <button aria-controls="addUser" aria-expanded="false" class="btn btn-warning"
                                 th:data-target="'#' + ${movie.id}" th:disabled="${editDisabled}"
                                 data-toggle="collapse" type="button">
-                            <span class="glyphicon glyphicon-remove">remove</span>
+                            <span class="glyphicon glyphicon-remove" th:text="#{button.remove}">remove</span>
                         </button>
                         <div class="collapse" th:id="${movie.id}">
                             <form th:action="@{/remove/__${movie.id}__}" th:method="delete">
                                 <input type="hidden" name="view" value="/table"/>
                                 <button type="submit" class="btn btn-danger" th:disabled="${editDisabled}">
-                                    <span class="glyphicon glyphicon-remove">confirm</span>
+                                    <span class="glyphicon glyphicon-remove"  th:text="#{button.confirm}">confirm</span>
                                 </button>
                             </form>
                         </div>
@@ -53,7 +53,8 @@
                     </td>
                     <td>
                         <a target="_blank" th:href="${movie.url}">
-                            <span th:text="${movie.name} + (${movie.watched} ? ' [watched]' : '')">name</span>
+                            <span th:if="${movie.watched}" th:text="${movie.name} + #{view.table.watched}">name</span>
+                            <span th:if="${!movie.watched}" th:text="${movie.name}">name</span>
                         </a>
                     </td>
                     <td>
@@ -68,7 +69,7 @@
                     <td>
                         <form th:action="@{/edit/__${movie.id}__}" th:method="get">
                             <button type="submit" class="btn btn-info" th:disabled="${editDisabled}">
-                                <span class="glyphicon glyphicon-pencil">edit</span>
+                                <span class="glyphicon glyphicon-pencil" th:text="#{button.edit}">edit</span>
                             </button>
                         </form>
                     </td>
@@ -76,8 +77,11 @@
                         <form th:action="@{/watched/__${movie.id}__}" th:method="post">
                             <input type="hidden" name="_method" value="PUT"/>
                             <input type="hidden" name="watched" th:value="${!movie.watched}"/>
-                            <button type="submit" class="btn btn-info" th:disabled="${editDisabled}">
-                                <span th:text="${movie.watched} ? 'Unwatch' : 'Watched'"></span>
+                            <button type="submit" class="btn btn-info" th:disabled="${editDisabled}"  th:if="${movie.watched}">
+                                <span th:text="#{button.unwatch}"></span>
+                            </button>
+                            <button type="submit" class="btn btn-info" th:disabled="${editDisabled}"  th:if="${!movie.watched}">
+                                <span th:text="#{button.watched}"></span>
                             </button>
                         </form>
                     </td>

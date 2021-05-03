@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <button th:fragment="addMovieModalButton" type="button" class="btn btn-success" data-toggle="modal"
-        data-target="#addMovie">
+        data-target="#addMovie" th:text="#{nav.button.movie.add}">
     Add movie
 </button>
 <div th:fragment="addMovieModal (backView)" class="modal fade" id="addMovie" tabindex="-1" role="dialog"
@@ -9,7 +9,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUserLabel">Add a movie</h5>
+                <h5 class="modal-title" id="addUserLabel" th:text="#{modal.add.title}">Add a movie</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,10 +17,10 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a class="btn btn-light" data-toggle="tab" href="#single" onclick="return clearInputs();">Single</a>
+                        <a class="btn btn-light" data-toggle="tab" href="#single" onclick="return clearInputs();" th:text="#{modal.add.single}">Single</a>
                     </li>
                     <li>
-                        <a class="btn btn-light" data-toggle="tab" href="#multi" onclick="return clearInputs();">Multi</a>
+                        <a class="btn btn-light" data-toggle="tab" href="#multi" onclick="return clearInputs();" th:text="#{modal.add.multi}">Multi</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -29,10 +29,10 @@
                             <input type="hidden" name="view" th:value="${backView}"/>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input class="form-control" name="imdbUrl" placeholder="IMDB url" type="url"
+                                    <input class="form-control" name="imdbUrl" th:placeholder="#{modal.add.single.url}" type="url"
                                            id="addMovieSingleInput" oninput="validate(this);">
                                     <div class="input-group-append">
-                                        <button id="addMovieSingle" disabled="disabled" class="btn btn-outline-secondary" type="submit">
+                                        <button id="addMovieSingle" disabled="disabled" class="btn btn-outline-secondary" type="submit" th:text="#{button.submit}">
                                             Submit
                                         </button>
                                     </div>
@@ -45,10 +45,9 @@
                             <input type="hidden" name="view" th:value="${backView}"/>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <textarea class="form-control" name="imdbUrls" placeholder="IMDB urls, keep each in separate line"
-                                              id="addMovieMultiInput" rows="3"></textarea>
+                                    <textarea class="form-control" name="imdbUrls" th:placeholder="#{modal.add.multi.url}" id="addMovieMultiInput" rows="3"></textarea>
                                     <div class="input-group-append">
-                                        <button id="addMovieMulti" class="btn btn-outline-secondary" type="submit">
+                                        <button id="addMovieMulti" class="btn btn-outline-secondary" type="submit" th:text="#{button.submit}">
                                             Submit
                                         </button>
                                     </div>

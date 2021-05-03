@@ -11,14 +11,14 @@ import java.util.Comparator;
 @Getter
 public enum MovieSorting {
 
-    NAME("By name", Comparator.comparing(Movie::getName)),
-    TYPE("By type (movie/series)", Comparator.comparing(Movie::getType)),
-    DATE("By release date", Comparator.comparing(Movie::getDatePublished)),
-    DURATION("By duration", Comparator.comparing(movie -> {
+    NAME("sort.name", Comparator.comparing(Movie::getName)),
+    TYPE("sort.type", Comparator.comparing(Movie::getType)),
+    DATE("sort.date", Comparator.comparing(Movie::getDatePublished)),
+    DURATION("sort.duration", Comparator.comparing(movie -> {
         final String duration = movie.getDuration();
         return StringUtils.isEmpty(duration) ? "0" : duration;
     })),
-    RATING("By rating", Comparator.comparing(movie -> {
+    RATING("sort.rating", Comparator.comparing(movie -> {
         final String rating = movie.getRating();
         return StringUtils.isEmpty(rating) ? "0" : rating;
     }));

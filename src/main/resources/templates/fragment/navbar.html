@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <nav th:fragment="navbar (backView)" class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{${backView}}">IMDb notepad!</a>
+    <a class="navbar-brand" th:href="@{${backView}}" th:text="#{logo.title}">IMDb notepad!</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarId"
             aria-controls="navbarId" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarId">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" th:href="@{/table}" th:classappend="${backView == '/table'} ? 'active' : ''">
+            <a class="nav-item nav-link" th:href="@{/table}" th:classappend="${backView == '/table'} ? 'active' : ''" th:text="#{nav.view.table}">
                 Table
             </a>
-            <a class="nav-item nav-link" th:href="@{/tiles}" th:classappend="${backView == ('/tiles')} ? 'active' : ''">
+            <a class="nav-item nav-link" th:href="@{/tiles}" th:classappend="${backView == ('/tiles')} ? 'active' : ''" th:text="#{nav.view.tiles}">
                 Tiles
             </a>
-            <a class="nav-item nav-link" th:href="@{/configuration}" th:classappend="${backView == ('/configuration')} ? 'active' : ''">
+            <a class="nav-item nav-link" th:href="@{/configuration}" th:classappend="${backView == ('/configuration')} ? 'active' : ''" th:text="#{nav.view.config}">
                 Configuration
             </a>
         </div>

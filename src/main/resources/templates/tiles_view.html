@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>IMDb notepad - images</title>
+    <title th:text="#{logo.title}">IMDb notepad - images</title>
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
     <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
@@ -28,7 +28,7 @@
                 <input type="hidden" name="view" value="/tiles"/>
                 <a th:hidden="${editDisabled}" href="javascript:{}"
                    th:onclick="'removeMovie(\'' + ${movie.id} + '\');'">
-                    <span class="text-center small">[remove]</span>
+                    <span class="text-center small" th:text="#{button.remove}">[remove]</span>
                 </a>
             </form>
         </div>

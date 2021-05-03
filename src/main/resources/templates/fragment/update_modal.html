@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<button th:fragment="updateModalButton" type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
+<button th:fragment="updateModalButton" type="button" class="btn btn-warning"
+        data-toggle="modal" data-target="#updateModal" th:text="#{nav.button.update}">
     Update all
 </button>
 <div th:fragment="updateModal (backView)" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
@@ -8,20 +9,20 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update all</h5>
+                <h5 class="modal-title" id="updateModalLabel" th:text="#{modal.update.title}">Update all</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>This action will redownload all movies info.</p>
-                <p>This action might take a while.</p>
+                <p th:text="#{modal.update.description1}">This action will redownload all movies info.</p>
+                <p th:text="#{modal.update.description2}">This action might take a while.</p>
             </div>
             <div class="modal-footer">
                 <form th:action="@{/update}" method="post">
                     <input type="hidden" name="_method" value="PUT"/>
                     <input type="hidden" name="view" th:value="${backView}"/>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-primary" type="submit" th:text="#{button.confirm}">
                         Confirm
                     </button>
                 </form>

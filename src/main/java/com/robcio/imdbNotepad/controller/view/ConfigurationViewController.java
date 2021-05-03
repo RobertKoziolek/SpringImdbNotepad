@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class ConfigurationViewController  {
+public class ConfigurationViewController extends MovieViewController{
 
     @GetMapping("/configuration")
     public String showTableView(final Model model) {
-//        model.addAttribute("editDisabled", updateService.isUpdating());
+        prepareModel(model);
         return "configuration_view";
     }
 }

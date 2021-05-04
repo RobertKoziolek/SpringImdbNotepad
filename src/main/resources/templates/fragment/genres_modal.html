@@ -18,7 +18,10 @@
                 <form class="form-horizontal" method="post" th:action="@{/genres}">
                     <input type="hidden" name="_method" value="PUT"/>
                     <input type="hidden" name="view" th:value="${backView}"/>
-                    <div class="row">
+                    <div class="row" th:if="${noMovies}">
+                        <h6 class="text-center" th:text="#{view.message.empty}"></h6>
+                    </div>
+                    <div class="row" th:if="${!noMovies}">
                         <div class="col-md-6">
                             <th:block th:each="genre, iter : ${genres}">
                                 <div class="checkbox" th:if="${iter.index % 2 == 0}">
@@ -38,9 +41,9 @@
                             </th:block>
                         </div>
                     </div>
-                    <button class="btn btn-success" type="submit" th:text="#{button.submit}">Submit</button>
-                    <button class="btn btn-info" type="reset" th:text="#{button.reset}">Reset</button>
-                    <button class="btn btn-info" type="button" onclick="uncheckAll();" th:text="#{button.clear}">Clear</button>
+                    <button th:if="${!noMovies}" class="btn btn-success" type="submit" th:text="#{button.submit}">Submit</button>
+                    <button th:if="${!noMovies}" class="btn btn-info" type="reset" th:text="#{button.reset}">Reset</button>
+                    <button th:if="${!noMovies}" class="btn btn-info" type="button" onclick="uncheckAll();" th:text="#{button.clear}">Clear</button>
                 </form>
             </div>
         </div>

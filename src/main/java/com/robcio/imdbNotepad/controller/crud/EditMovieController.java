@@ -19,13 +19,13 @@ public class EditMovieController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable final Long id, final Model model) {
+    public String getEditView(@PathVariable final Long id, final Model model) {
         model.addAttribute("movie", movieService.get(id));
         return "edit";
     }
 
     @PutMapping("/edit/{id}")
-    public String adjustLanguage(@PathVariable final Long id, @ModelAttribute Movie movie) {
+    public String editMovie(@PathVariable final Long id, @ModelAttribute Movie movie) {
         movieService.edit(id, movie);
         return "redirect:/table";
     }

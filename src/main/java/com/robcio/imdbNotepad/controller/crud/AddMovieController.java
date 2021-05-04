@@ -24,6 +24,7 @@ public class AddMovieController {
     @PostMapping("/add")
     public String add(@RequestParam final String imdbUrl, @RequestParam final String view) {
         movieService.add(imdbUrl);
+        //TODO personal description on why its being saved
         return "redirect:" + view;
     }
 

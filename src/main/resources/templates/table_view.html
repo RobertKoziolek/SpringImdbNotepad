@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{logo.title}">IMDb notepad</title>
-    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -15,7 +15,7 @@
 <div class="container">
     <nav th:replace="fragment/navbar.html :: navbar (backView='/table')"></nav>
     <div th:replace="fragment/navbar.html :: navbarModals (backView='/table')"></div>
-    <div class="well">
+    <div class="well" th:if="${!noMovies}">
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -89,6 +89,10 @@
             </th:block>
             </tbody>
         </table>
+    </div>
+
+    <div class="row" th:if="${noMovies}">
+        <h3 class="text-center" th:text="#{view.message.empty}"></h3>
     </div>
 </div>
 </body>

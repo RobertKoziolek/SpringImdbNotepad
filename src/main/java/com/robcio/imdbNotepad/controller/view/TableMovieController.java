@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class TableMovieController extends MovieViewController{
-
+    //TODO export to file, simple with names and years of release and one with links to reimport again
     @Autowired
     private UpdateService updateService;
 

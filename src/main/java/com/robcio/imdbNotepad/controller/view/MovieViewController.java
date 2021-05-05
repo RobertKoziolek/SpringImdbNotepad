@@ -23,6 +23,7 @@ abstract class MovieViewController {
         model.addAttribute("noMovies", movieList.isEmpty());
         model.addAttribute("movies", movieList);
         model.addAttribute("genres", filterService.getDistinctGenres());
+        //TODO profile selection
         model.addAttribute("activeGenres", filterService.getGenres());
         model.addAttribute("watchedSortTypes", WatchedSorting.values());
         model.addAttribute("sortTypes", MovieSorting.values());

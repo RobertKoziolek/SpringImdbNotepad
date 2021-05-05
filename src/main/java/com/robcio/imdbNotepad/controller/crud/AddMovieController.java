@@ -25,6 +25,7 @@ public class AddMovieController {
     public String add(@RequestParam final String imdbUrl, @RequestParam final String view) {
         movieService.add(imdbUrl);
         //TODO personal description on why its being saved
+        //TODO profile info on who adds it so that can be filtered later
         return "redirect:" + view;
     }
 

@@ -10,7 +10,8 @@
             <input type="hidden" name="view" th:value="${backView}"/>
             <th:block th:each="sort : ${watchedSortTypes}">
                 <button type="submit" class="dropdown-item" name="watchedCriteria"
-                        th:value="${sort}" th:text="#{${sort.label}}">
+                        th:value="${sort}" th:text="#{${sort.label}}"
+                        th:classappend="${activeWatchedOption} == ${sort} ? 'active' : ''" >
                     watched sorting type
                 </button>
             </th:block>

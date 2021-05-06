@@ -10,7 +10,8 @@
             <input type="hidden" name="view" th:value="${backView}"/>
             <th:block th:each="sort : ${sortTypes}">
                 <button type="submit" class="dropdown-item" name="sorting"
-                        th:value="${sort}" th:text="#{${sort.label}}">
+                        th:value="${sort}" th:text="#{${sort.label}}"
+                        th:classappend="${activeSortOption} == ${sort} ? 'active' : ''" >
                     sorting type
                 </button>
             </th:block>

@@ -35,15 +35,16 @@ public class MovieService {
         this.imdbParserService = imdbParserService;
     }
 
-    public void add(final String imdbUrl) {
+    public void add(final String imdbUrl, final Long profileId) {
         final Movie movie = imdbParserService.parse(imdbUrl);
+        movie.setProfileId(profileId);
         logger.debug("Adding {}", movie.getName());
         movieRepository.save(movie);
     }
 
     @Async
-    public void addAsync(final String imdbUrl) {
-        add(imdbUrl);
+    public void addAsync(final String imdbUrl, final Long profileId) {
+        add(imdbUrl, profileId);
     }
 
     public List<Movie> getAll() {

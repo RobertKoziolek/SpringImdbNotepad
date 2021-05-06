@@ -23,7 +23,7 @@ abstract class MovieViewController {
     @Autowired
     private SettingService settingService;
 
-    //TODO trailer if available
+    //TODO perhaps something that specifically takes care of preparing the basic view model
     void prepareModel(final Model model) {
         final WatchedCriteria watchedCriteria = settingService.getSetting(WatchedCriteria.class);
         final SortingCriteria sortingCriteria = settingService.getSetting(SortingCriteria.class);
@@ -32,7 +32,6 @@ abstract class MovieViewController {
         model.addAttribute("movies", movieList);
         model.addAttribute("genres", filterService.getDistinctGenres());
         model.addAttribute("profiles", profileService.getAll());
-        //TODO profile selection
         model.addAttribute("activeGenres", filterService.getGenres());
         model.addAttribute("watchedSortTypes", WatchedCriteria.values());
         model.addAttribute("activeWatchedOption", watchedCriteria);

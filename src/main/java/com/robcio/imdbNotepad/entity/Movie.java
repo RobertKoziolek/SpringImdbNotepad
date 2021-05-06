@@ -38,4 +38,7 @@ public class Movie {
     private String type;
 
     private Boolean watched;
+
+    private Long profileId;
+    //TODO trailer if available
 }

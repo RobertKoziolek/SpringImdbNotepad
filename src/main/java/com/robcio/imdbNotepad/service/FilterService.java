@@ -1,6 +1,7 @@
 package com.robcio.imdbNotepad.service;
 
 import com.robcio.imdbNotepad.entity.Movie;
+import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
 import com.robcio.imdbNotepad.repository.MovieRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class FilterService {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private SettingService settingService;
+
     @Getter
     private Set<String> genres = Collections.emptySet();
 
@@ -24,10 +28,12 @@ public class FilterService {
     }
 
     Stream<Movie> filter(final Stream<Movie> stream) {
+        Stream<Movie> tempStream = stream;
         if (!SetUtils.isEmpty(genres)) {
-            return stream.filter(movie -> !Collections.disjoint(movie.getGenres(), genres));
+            tempStream = stream.filter(movie -> !Collections.disjoint(movie.getGenres(), genres));
         }
-        return stream;
+        final WatchedCriteria watchedCriteria = settingService.getSetting(WatchedCriteria.class);
+        return tempStream.filter(watchedCriteria.getPredicate());
     }
 
     public Set<String> getDistinctGenres() {

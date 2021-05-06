@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 @AllArgsConstructor
 @Getter
-public enum MovieSorting {
+public enum SortingCriteria {
 
     NAME("sort.name", Comparator.comparing(Movie::getName)),
     TYPE("sort.type", Comparator.comparing(Movie::getType)),
@@ -26,7 +26,7 @@ public enum MovieSorting {
     private final String label;
     private final Comparator<Movie> comparator;
 
-    public static MovieSorting getDefault() {
+    public static SortingCriteria getDefault() {
         return NAME;
     }
 }

@@ -19,6 +19,7 @@ public class ConsolidatedProfileController {
     @PostMapping("/add")
     public String add(@RequestParam String name, @RequestParam final String view) {
         profileService.add(name);
+        //TODO color selection for profile so that it can be easily seen in table/tiles view who added it
         return "redirect:" + view;
     }
 

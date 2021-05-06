@@ -1,7 +1,7 @@
 package com.robcio.imdbNotepad.controller;
 
-import com.robcio.imdbNotepad.enumeration.MovieSorting;
-import com.robcio.imdbNotepad.enumeration.WatchedSorting;
+import com.robcio.imdbNotepad.enumeration.SortingCriteria;
+import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
 import com.robcio.imdbNotepad.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,14 +21,14 @@ public class SortingMovieController {
     }
 
     @PutMapping("/sorting")
-    public String changeSorting(@RequestParam final MovieSorting sorting, @RequestParam final String view) {
+    public String changeSorting(@RequestParam final SortingCriteria sorting, @RequestParam final String view) {
         settingService.setSetting(sorting);
         return "redirect:" + view;
     }
 
     @PutMapping("/sorting/watched")
-    public String setHideWatched(@RequestParam final WatchedSorting watchedSorting, @RequestParam final String view) {
-        settingService.setSetting(watchedSorting);
+    public String setHideWatched(@RequestParam final WatchedCriteria watchedCriteria, @RequestParam final String view) {
+        settingService.setSetting(watchedCriteria);
         return "redirect:" + view;
     }
 }

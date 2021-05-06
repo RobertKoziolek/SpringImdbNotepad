@@ -9,7 +9,7 @@
             <input type="hidden" name="_method" value="PUT"/>
             <input type="hidden" name="view" th:value="${backView}"/>
             <th:block th:each="sort : ${watchedSortTypes}">
-                <button type="submit" class="dropdown-item" name="watchedSorting"
+                <button type="submit" class="dropdown-item" name="watchedCriteria"
                         th:value="${sort}" th:text="#{${sort.label}}">
                     watched sorting type
                 </button>

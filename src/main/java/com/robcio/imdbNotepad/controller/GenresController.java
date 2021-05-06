@@ -21,7 +21,7 @@ public class GenresController {
     }
 
     @PutMapping("/genres")
-    public String changeSorting(@RequestParam(required = false) final Set<String> genres,
+    public String changeSelectedGenres(@RequestParam(required = false) final Set<String> genres,
                                 @RequestParam final String view) {
         filterService.setGenres(genres);
         return "redirect:" + view;

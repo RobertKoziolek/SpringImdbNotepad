@@ -33,7 +33,7 @@
                                            id="addMovieSingleInput" oninput="validate(this);">
                                     <select id="profilesSingle" name="profileId">
                                         <option th:each="profile: ${profiles}"  th:value="${profile.id}"
-                                                th:text="${profile.name}">Profile</option>
+                                                th:text="${profile.name}" th:selected="${selectedProfile != null && selectedProfile.id==profile.id}">Profile</option>
                                     </select>
                                     <div class="input-group-append">
                                         <button id="addMovieSingle" disabled="disabled" class="btn btn-outline-secondary" type="submit" th:text="#{button.submit}">

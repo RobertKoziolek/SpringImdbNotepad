@@ -16,8 +16,16 @@ public class TableMovieController extends MovieViewController{
 
     @GetMapping("/table")
     public String showTableView(final Model model) {
-        prepareModel(model);
-        model.addAttribute("editDisabled", updateService.isUpdating());
+        return showView(model);
+    }
+
+    @Override
+    String getViewName() {
         return "table_view";
+    }
+
+    @Override
+    void customizeModel(final Model model){
+        model.addAttribute("editDisabled", updateService.isUpdating());
     }
 }

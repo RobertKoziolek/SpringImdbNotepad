@@ -31,6 +31,11 @@ public class ProfileService {
         return profileRepository.findAll();
     }
 
+    public Profile findById(final Long id) {
+        //TODO need to check if exists
+        return profileRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("No profile found"));
+    }
+
     public void remove(Long id) {
         profileRepository.deleteById(id);
     }

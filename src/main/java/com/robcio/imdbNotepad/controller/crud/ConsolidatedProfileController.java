@@ -2,6 +2,7 @@ package com.robcio.imdbNotepad.controller.crud;
 
 import com.robcio.imdbNotepad.entity.Profile;
 import com.robcio.imdbNotepad.service.ProfileService;
+import com.robcio.imdbNotepad.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +14,11 @@ import java.util.List;
 @RequestMapping("/profile")
 public class ConsolidatedProfileController {
 
-    private final ProfileService profileService;
+    @Autowired
+    private ProfileService profileService;
 
     @Autowired
-    public ConsolidatedProfileController(final ProfileService profileService) {
-        this.profileService = profileService;
-    }
+    private SessionService sessionService;
 
     @PostMapping("/add")
     public String add(@RequestParam String name, @RequestParam final String view) {
@@ -40,5 +40,16 @@ public class ConsolidatedProfileController {
         model.addAttribute("profiles", profiles);
         return "profile_selection_view";
     }
-    //TODO post/put call for selecting profile (need session variable)
+
+    @PutMapping("/select/{id}")
+    public String selectProfile(final Model model, @PathVariable final Long id) {
+        sessionService.setProfile(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(final Model model) {
+        sessionService.setProfile(0L);
+        return "redirect:/";
+    }
 }

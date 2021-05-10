@@ -15,18 +15,19 @@
 <div class="container">
 <!--    <nav th:replace="fragment/navbar.html :: navbar (backView='/tiles')"></nav>-->
 <!--    <div th:replace="fragment/navbar.html :: navbarModals (backView='/tiles')"></div>-->
-    <div class="row" th:if="${!noProfiles}">
-        <div class="col-sm-3" th:each="profile : ${profiles}">
+    <div class="h-100 row align-items-center" th:if="${!noProfiles}">
+        <div class="col" th:each="profile : ${profiles}">
 <!--             th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''} ${movie.type.equals('TVSeries') ? 'bg-white' : ''} ${movie.watched ? 'border border-danger' : ''}|">-->
 
-            <span class="text-center h5" th:text="${profile.name}">name</span>
+<!--            <span class="text-center h5" th:text="${profile.name}">name</span>-->
             <!--        TODO add some kind of avatar netflix-like-->
-<!--            <a target="_blank" th:href="${movie.url}">-->
-                <img class="img-thumbnail" >
-<!--                th:alt="${movie.name}" th:title="${movie.description}"-->
-<!--                     th:src="${movie.imageUrl}">-->
-
-<!--            </a>-->
+<!--                <img class="img-thumbnail" >-->
+            <form th:action="@{/profile/select/__${profile.id}__}" th:method="post">
+                <input type="hidden" name="_method" value="PUT"/>
+                <button type="submit" class="btn btn-info">
+                    <span th:text="${profile.name}"></span>
+                </button>
+            </form>
         </div>
     </div>
 

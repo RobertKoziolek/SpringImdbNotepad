@@ -3,10 +3,7 @@ package com.robcio.imdbNotepad.controller.view;
 import com.robcio.imdbNotepad.entity.Movie;
 import com.robcio.imdbNotepad.enumeration.SortingCriteria;
 import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
-import com.robcio.imdbNotepad.service.FilterService;
-import com.robcio.imdbNotepad.service.MovieService;
-import com.robcio.imdbNotepad.service.ProfileService;
-import com.robcio.imdbNotepad.service.SettingService;
+import com.robcio.imdbNotepad.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
@@ -21,6 +18,8 @@ abstract class MovieViewController {
     @Autowired
     private ProfileService profileService;
     @Autowired
+    private SessionService sessionService;
+    @Autowired
     private SettingService settingService;
 
     //TODO perhaps something that specifically takes care of preparing the basic view model
@@ -31,11 +30,28 @@ abstract class MovieViewController {
         model.addAttribute("noMovies", movieList.isEmpty());
         model.addAttribute("movies", movieList);
         model.addAttribute("genres", filterService.getDistinctGenres());
+        model.addAttribute("selectedProfile", sessionService.getProfile());
         model.addAttribute("profiles", profileService.getAll());
         model.addAttribute("activeGenres", filterService.getGenres());
         model.addAttribute("watchedSortTypes", WatchedCriteria.values());
         model.addAttribute("activeWatchedOption", watchedCriteria);
         model.addAttribute("sortTypes", SortingCriteria.values());
         model.addAttribute("activeSortOption", sortingCriteria);
+    }
+
+    abstract String getViewName();
+
+    void customizeModel(final Model model){
+    }
+
+    public String showView(final Model model) {
+        prepareModel(model);
+        customizeModel(model);
+        final String viewName = getViewName();
+        sessionService.setLastView(viewName);
+        if (sessionService.noProfileSelected()){
+            return "redirect:/profile/select";
+        }
+        return viewName;
     }
 }

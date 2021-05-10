@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <nav th:fragment="navbar (backView)" class="navbar rounded sticky-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{${backView}}" th:text="#{logo.title}">IMDb notepad!</a>
+    <a class="navbar-brand" th:title="#{nav.button.logout}" th:href="@{/profile/logout}" th:text="#{logo.title}">IMDb notepad!</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarId"
             aria-controls="navbarId" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

@@ -11,8 +11,12 @@ public class ConfigurationViewController extends MovieViewController{
 
 
     @GetMapping("/configuration")
-    public String showTableView(final Model model) {
-        prepareModel(model);
+    public String showConfigurationView(final Model model) {
+        return showView(model);
+    }
+
+    @Override
+    String getViewName() {
         return "configuration_view";
     }
 }

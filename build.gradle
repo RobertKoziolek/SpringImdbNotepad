@@ -35,6 +35,8 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
 
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.24'
+//    implementation group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.4.3'
+//    implementation group: 'org.springframework.session', name: 'spring-session-core', version: '2.4.3'
 
 
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'

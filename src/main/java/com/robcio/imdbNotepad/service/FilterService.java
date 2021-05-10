@@ -27,6 +27,7 @@ public class FilterService {
         this.genres = Objects.isNull(genres) ? Collections.emptySet() : genres;
     }
 
+    //TODO filter by profile
     Stream<Movie> filter(final Stream<Movie> stream) {
         Stream<Movie> tempStream = stream;
         if (!SetUtils.isEmpty(genres)) {
@@ -36,6 +37,7 @@ public class FilterService {
         return tempStream.filter(watchedCriteria.getPredicate());
     }
 
+    //TODO might want to make sql call for distinct on genres table (it's set up only as @CollectionTable in Movie entity)
     public Set<String> getDistinctGenres() {
         final List<Movie> all = movieRepository.findAll();
         return all.stream()

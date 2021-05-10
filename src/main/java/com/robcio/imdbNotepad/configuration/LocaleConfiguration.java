@@ -13,6 +13,7 @@ import java.util.Locale;
 @Configuration
 public class LocaleConfiguration extends WebMvcConfigurerAdapter {
 
+    //TODO perhaps save selected locale in db so that on server restart it's remembered
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();

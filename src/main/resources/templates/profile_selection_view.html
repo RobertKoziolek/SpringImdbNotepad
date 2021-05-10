@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{logo.title}">IMDb notepad - images</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<!--    <nav th:replace="fragment/navbar.html :: navbar (backView='/tiles')"></nav>-->
+<!--    <div th:replace="fragment/navbar.html :: navbarModals (backView='/tiles')"></div>-->
+    <div class="row" th:if="${!noProfiles}">
+        <div class="col-sm-3" th:each="profile : ${profiles}">
+<!--             th:classappend="|${movie.type.equals('Movie') ? 'bg-light' : ''} ${movie.type.equals('TVSeries') ? 'bg-white' : ''} ${movie.watched ? 'border border-danger' : ''}|">-->
+
+            <span class="text-center h5" th:text="${profile.name}">name</span>
+            <!--        TODO add some kind of avatar netflix-like-->
+<!--            <a target="_blank" th:href="${movie.url}">-->
+                <img class="img-thumbnail" >
+<!--                th:alt="${movie.name}" th:title="${movie.description}"-->
+<!--                     th:src="${movie.imageUrl}">-->
+
+<!--            </a>-->
+        </div>
+    </div>
+
+    <div class="row" th:if="${noProfiles}">
+        <h3 class="text-center" th:text="#{view.profiles.empty}"></h3>
+        <a class="nav-item nav-link" th:href="@{/configuration}" th:text="#{nav.view.config}">
+            Configuration link
+        </a>
+    </div>
+</div>
+<script lang="javascript">
+    function removeMovie(id){
+        document.getElementById('removeMovieForm'+id).submit();
+    }
+</script>
+</body>
+</html>

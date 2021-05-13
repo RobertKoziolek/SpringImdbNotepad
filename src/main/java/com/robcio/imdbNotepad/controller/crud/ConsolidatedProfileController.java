@@ -34,7 +34,7 @@ public class ConsolidatedProfileController {
     }
 
     @GetMapping("/select")
-    public String showTableView(final Model model) {
+    public String showSelectProfileView(final Model model) {
         final List<Profile> profiles = profileService.getAll();
         model.addAttribute("noProfiles", profiles.isEmpty());
         model.addAttribute("profiles", profiles);

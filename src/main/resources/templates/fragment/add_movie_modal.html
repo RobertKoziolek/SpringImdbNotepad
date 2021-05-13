@@ -31,10 +31,10 @@
                                 <div class="input-group mb-3">
                                     <input class="form-control" name="imdbUrl" th:placeholder="#{modal.add.single.url}" type="url"
                                            id="addMovieSingleInput" oninput="validate(this);">
-                                    <select id="profilesSingle" name="profileId">
-                                        <option th:each="profile: ${profiles}"  th:value="${profile.id}"
-                                                th:text="${profile.name}" th:selected="${selectedProfile != null && selectedProfile.id==profile.id}">Profile</option>
-                                    </select>
+<!--                                    <select id="profilesSingle" name="profileId">-->
+<!--                                        <option th:each="profile: ${profiles}"  th:value="${profile.id}"-->
+<!--                                                th:text="${profile.name}" th:selected="${selectedProfile != null && selectedProfile.id==profile.id}">Profile</option>-->
+<!--                                    </select>-->
                                     <div class="input-group-append">
                                         <button id="addMovieSingle" disabled="disabled" class="btn btn-outline-secondary" type="submit" th:text="#{button.submit}">
                                             Submit
@@ -50,10 +50,10 @@
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <textarea class="form-control" name="imdbUrls" th:placeholder="#{modal.add.multi.url}" id="addMovieMultiInput" rows="3"></textarea>
-                                    <select id="profilesMulti" name="profileId">
-                                        <option th:each="profile: ${profiles}"  th:value="${profile.id}"
-                                                th:text="${profile.name}">Profile</option>
-                                    </select>
+<!--                                    <select id="profilesMulti" name="profileId">-->
+<!--                                        <option th:each="profile: ${profiles}"  th:value="${profile.id}"-->
+<!--                                                th:text="${profile.name}">Profile</option>-->
+<!--                                    </select>-->
                                     <div class="input-group-append">
                                         <button id="addMovieMulti" class="btn btn-outline-secondary" type="submit" th:text="#{button.submit}">
                                             Submit

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.SetUtils;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 @Service
@@ -20,6 +21,9 @@ public class FilterService {
     @Autowired
     private SettingService settingService;
 
+    @Autowired
+    private SessionService sessionService;
+
     @Getter
     private Set<String> genres = Collections.emptySet();
 
@@ -27,14 +31,14 @@ public class FilterService {
         this.genres = Objects.isNull(genres) ? Collections.emptySet() : genres;
     }
 
-    //TODO filter by profile
     Stream<Movie> filter(final Stream<Movie> stream) {
         Stream<Movie> tempStream = stream;
         if (!SetUtils.isEmpty(genres)) {
             tempStream = stream.filter(movie -> !Collections.disjoint(movie.getGenres(), genres));
         }
         final WatchedCriteria watchedCriteria = settingService.getSetting(WatchedCriteria.class);
-        return tempStream.filter(watchedCriteria.getPredicate());
+        final Predicate<Movie> ownershipCriteriaPredicate = sessionService.getOwnershipCriteriaForProfile();
+        return tempStream.filter(watchedCriteria.getPredicate()).filter(ownershipCriteriaPredicate);
     }
 
     //TODO might want to make sql call for distinct on genres table (it's set up only as @CollectionTable in Movie entity)

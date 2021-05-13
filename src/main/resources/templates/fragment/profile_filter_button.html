@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="profileFilterButton (backView)" class="btn-group" role="group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" th:text="#{nav.button.ownership}">
+        Added by
+    </button>
+    <div class="dropdown-menu">
+        <form th:action="@{/sorting/ownership}" th:method="post">
+            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" name="view" th:value="${backView}"/>
+            <th:block th:each="ownership : ${ownerships}">
+                <button type="submit" class="dropdown-item" name="ownershipCriteria"
+                        th:value="${ownership}" th:text="#{${ownership.label}}"
+                        th:classappend="${activeOwnership} == ${ownership} ? 'active' : ''" >
+                    watched sorting type
+                </button>
+            </th:block>
+        </form>
+    </div>
+</div>
+</html>

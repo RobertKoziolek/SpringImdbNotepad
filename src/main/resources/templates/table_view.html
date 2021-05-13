@@ -25,6 +25,7 @@
                 <th scope="col" th:text="#{view.table.type}">Type</th>
                 <th scope="col" th:text="#{view.table.genres}">Genres</th>
                 <th scope="col" th:text="#{view.table.published}">Published</th>
+                <th scope="col" th:text="#{view.table.ownership}">Added by</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -64,7 +65,10 @@
                         <span th:text="${movie.genres}">genres</span>
                     </td>
                     <td>
-                        <span th:text="${#strings.substring(movie.datePublished,0,4)} ">date published</span>
+                        <span th:text="${#strings.substring(movie.datePublished,0,4)}">date published</span>
+                    </td>
+                    <td>
+                        <span th:text="${profiles.get(movie.profileId)}">added by</span>
                     </td>
                     <td>
                         <form th:action="@{/edit/__${movie.id}__}" th:method="get">

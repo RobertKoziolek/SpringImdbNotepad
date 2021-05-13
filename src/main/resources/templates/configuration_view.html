@@ -34,14 +34,14 @@
             <span th:text="#{view.config.profiles}">Profiles</span>:
             <ul class="list-group" th:each="profile: ${profiles}">
                 <li class="list-group-item">
-                    <form th:id="'removeProfileForm' + ${profile.id}" th:action="@{/profile/remove/__${profile.id}__}" th:method="delete">
+                    <form th:id="'removeProfileForm' + ${profile.key}" th:action="@{/profile/remove/__${profile.key}__}" th:method="delete">
                         <input type="hidden" name="view" value="/configuration"/>
                         <div class="float-left">
-                            <p th:text="${profile.name}">Profile name</p>
+                            <p th:text="${profile.value}">Profile name</p>
                         </div>
                         <div class="float right">
                             <a th:hidden="${editDisabled}" href="javascript:{}"
-                               th:onclick="'removeProfile(\'' + ${profile.id} + '\');'">
+                               th:onclick="'removeProfile(\'' + ${profile.key} + '\');'">
                                 <p class="text-right" th:text="#{button.remove}">[remove]</p>
                             </a>
                             </div>
@@ -49,21 +49,8 @@
                     </form>
                 </li>
             </ul>
-            <form class="form-horizontal" method="post" th:action="@{/profile/add}">
-                <input type="hidden" name="view" value="/configuration"/>
-                <div class="form-group">
-                    <div class="input-group mb-10">
-                        <input class="form-control" name="name" th:placeholder="#{view.config.profile}" type="text"
-                               id="name">
-                        <div class="input-group-append">
-                            <button id="addProfileSingle" class="btn btn-outline-secondary" type="submit" th:text="#{button.add}">
-                                Add
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+            <form th:replace="fragment/add_profile_form.html :: addProfileForm (backView='/configuration')"/>
+        </form>
     </div>
 </div>
 <script type="text/javascript">

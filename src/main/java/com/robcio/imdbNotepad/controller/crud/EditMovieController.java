@@ -27,7 +27,7 @@ public class EditMovieController {
     @PutMapping("/edit/{id}")
     public String editMovie(@PathVariable final Long id, @ModelAttribute Movie movie) {
         movieService.edit(id, movie);
-        //TODO profile ownership of added movie
+        //TODO profile ownership of edited movie
         return "redirect:/table";
     }
 }

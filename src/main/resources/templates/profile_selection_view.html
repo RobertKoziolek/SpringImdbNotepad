@@ -33,15 +33,8 @@
 
     <div class="row" th:if="${noProfiles}">
         <h3 class="text-center" th:text="#{view.profiles.empty}"></h3>
-        <a class="nav-item nav-link" th:href="@{/configuration}" th:text="#{nav.view.config}">
-            Configuration link
-        </a>
+        <form th:replace="fragment/add_profile_form.html :: addProfileForm (backView='/', profile=${profile})"/>
     </div>
 </div>
-<script lang="javascript">
-    function removeMovie(id){
-        document.getElementById('removeMovieForm'+id).submit();
-    }
-</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.robcio.imdbNotepad.controller.crud;
 
 import com.robcio.imdbNotepad.service.MovieService;
+import com.robcio.imdbNotepad.service.SessionService;
 import com.robcio.imdbNotepad.util.UrlRefiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,25 +19,26 @@ import java.util.function.Predicate;
 @RequestMapping("/")
 public class AddMovieController {
 
-    private final MovieService movieService;
-
     @Autowired
-    public AddMovieController(final MovieService movieService) {
-        this.movieService = movieService;
-    }
+    private MovieService movieService;
+    @Autowired
+    private SessionService sessionService;
 
     @PostMapping("/add")
-    public String add(@RequestParam final String imdbUrl, @RequestParam final Long profileId, @RequestParam final String view) {
-        movieService.add(imdbUrl, profileId);
+    public String add(@RequestParam final String imdbUrl, @RequestParam final String view) {
+        final Long id = sessionService.getProfile().getId();
+        movieService.add(imdbUrl, id);
         //TODO personal description on why its being saved
         return "redirect:" + view;
     }
 
     @PostMapping("/add/multi")
-    public String addMulti(@RequestParam final String imdbUrls, @RequestParam final Long profileId, @RequestParam final String view) {
+    public String addMulti(@RequestParam final String imdbUrls, @RequestParam final String view) {
+        final Long id = sessionService.getProfile().getId();
         final List<String> split = UrlRefiner.split(imdbUrls);
         final Predicate<String> check = this::checkUrl;
-        split.stream().distinct().filter(check.negate()).forEach(imdbUrl->movieService.addAsync(imdbUrl, profileId));
+
+        split.stream().distinct().filter(check.negate()).forEach(imdbUrl->movieService.addAsync(imdbUrl, id));
         return "redirect:" + view;
     }
 

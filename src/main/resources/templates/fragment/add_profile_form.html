@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <form class="form-horizontal" method="post" th:action="@{/profile/add}" th:fragment="addProfileForm (backView)">
+        <input type="hidden" name="view" th:value="${backView}"/>
+        <div class="form-group">
+            <div class="input-group mb-10">
+                <input class="form-control" name="name" th:placeholder="#{view.config.profile}" type="text"
+                       id="name">
+                <div class="input-group-append">
+                    <button id="addProfileSingle" class="btn btn-outline-secondary" type="submit" th:text="#{button.add}">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</html>

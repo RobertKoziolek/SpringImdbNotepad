@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -29,6 +31,11 @@ public class ProfileService {
 
     public List<Profile> getAll(){
         return profileRepository.findAll();
+    }
+
+    public Map<Long, String> getAllAsMap(){
+        final List<Profile> all = profileRepository.findAll();
+        return all.stream().collect(Collectors.toMap(Profile::getId, Profile::getName));
     }
 
     public Profile findById(final Long id) {

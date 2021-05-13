@@ -25,6 +25,7 @@
         <button th:replace="fragment/genres_modal.html :: genresModalButton"></button>
         <div th:replace="fragment/sort_button.html :: sortButton (backView=${backView})"></div>
         <div th:replace="fragment/watched_sort_button.html :: watchedSortButton (backView=${backView})"></div>
+        <div th:replace="fragment/profile_filter_button.html :: profileFilterButton (backView=${backView})"></div>
     </div>
 </nav>
 <div th:fragment="navbarModals (backView)" id="modals">

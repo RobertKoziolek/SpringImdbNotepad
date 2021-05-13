@@ -1,6 +1,7 @@
 package com.robcio.imdbNotepad.controller.view;
 
 import com.robcio.imdbNotepad.entity.Movie;
+import com.robcio.imdbNotepad.enumeration.OwnershipCriteria;
 import com.robcio.imdbNotepad.enumeration.SortingCriteria;
 import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
 import com.robcio.imdbNotepad.service.*;
@@ -31,12 +32,14 @@ abstract class MovieViewController {
         model.addAttribute("movies", movieList);
         model.addAttribute("genres", filterService.getDistinctGenres());
         model.addAttribute("selectedProfile", sessionService.getProfile());
-        model.addAttribute("profiles", profileService.getAll());
+        model.addAttribute("profiles", profileService.getAllAsMap());
         model.addAttribute("activeGenres", filterService.getGenres());
         model.addAttribute("watchedSortTypes", WatchedCriteria.values());
         model.addAttribute("activeWatchedOption", watchedCriteria);
         model.addAttribute("sortTypes", SortingCriteria.values());
         model.addAttribute("activeSortOption", sortingCriteria);
+        model.addAttribute("ownerships", OwnershipCriteria.values());
+        model.addAttribute("activeOwnership", sessionService.getOwnershipCriteria());
     }
 
     abstract String getViewName();
@@ -45,13 +48,13 @@ abstract class MovieViewController {
     }
 
     public String showView(final Model model) {
-        prepareModel(model);
-        customizeModel(model);
         final String viewName = getViewName();
         sessionService.setLastView(viewName);
         if (sessionService.noProfileSelected()){
             return "redirect:/profile/select";
         }
+        prepareModel(model);
+        customizeModel(model);
         return viewName;
     }
 }

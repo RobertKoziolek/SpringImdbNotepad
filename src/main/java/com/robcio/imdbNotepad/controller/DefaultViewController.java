@@ -19,8 +19,6 @@ public class DefaultViewController {
             return "redirect:/profile/select";
         }
         final String lastView = sessionService.getLastView();
-
-        //TODO remember last page
         return "redirect:/"+lastView;
     }
 }

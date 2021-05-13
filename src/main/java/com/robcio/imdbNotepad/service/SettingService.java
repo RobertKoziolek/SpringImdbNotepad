@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,14 +19,17 @@ public class SettingService {
     @Autowired
     private SessionService sessionService;
 
-    public <T extends Enum<T>> T getSetting(final Class<T> clazz) {
+
+    private String getSettingValue(final String settingName) throws NoSuchElementException {
         final Long profileId = sessionService.getProfile().getId();
-        final Optional<Setting> settingOptional = settingRepository.findByNameAndProfileId(clazz.getSimpleName(), profileId);
-        if (settingOptional.isPresent()) {
-            final String value = settingOptional.get()
-                                                .getValue();
+        return settingRepository.findByNameAndProfileId(settingName, profileId).get().getValue();
+    }
+
+    public <T extends Enum<T>> T getSetting(final Class<T> clazz) {
+        try {
+            final String value = getSettingValue(clazz.getSimpleName());
             return T.valueOf(clazz, value);
-        } else {
+        } catch (final NoSuchElementException e){
             final T[] enumConstants = clazz.getEnumConstants();
             final T aDefault = enumConstants[0];
             setSetting(aDefault);
@@ -35,15 +38,13 @@ public class SettingService {
     }
 
     public Set<String> getSettingSet(final String settingName) {
-        final Long profileId = sessionService.getProfile().getId();
-        final Optional<Setting> settingOptional = settingRepository.findByNameAndProfileId(settingName, profileId);
-        if (settingOptional.isPresent()){
-            final String value = settingOptional.get().getValue();
-            if (value.isEmpty()) return returnEmptySettingSet(settingName);
-            final Set<String> set = Arrays.stream(value.split("~")).collect(Collectors.toSet());
-            return set;
+        try {
+            final String value = getSettingValue(settingName);
+            if (value.isEmpty()) throw new NoSuchElementException();
+            return Arrays.stream(value.split("~")).collect(Collectors.toSet());
+        } catch (final NoSuchElementException e){
+            return returnEmptySettingSet(settingName);
         }
-        return returnEmptySettingSet(settingName);
     }
 
     private Set<String> returnEmptySettingSet(final String settingName) {
@@ -53,18 +54,20 @@ public class SettingService {
     }
 
     public <T extends Enum> void setSetting(final T settingEnum) {
-        final Long profileId = sessionService.getProfile().getId();
-        final Setting setting = new Setting(settingEnum.getClass()
-                                                       .getSimpleName(), profileId, settingEnum.name());
-        settingRepository.save(setting);
+        saveSetting(settingEnum.getClass()
+                               .getSimpleName(), settingEnum.name());
     }
 
     public <T> void setSettingSet(final String settingName, final Set<String> stringSet) {
-        final Long profileId = sessionService.getProfile().getId();
         String setValue = "";
         if (stringSet!= null)
             setValue = stringSet.stream().map(String::valueOf).collect(Collectors.joining("~"));
-        final Setting setting = new Setting(settingName, profileId, setValue);
+        saveSetting(settingName, setValue);
+    }
+
+    private void saveSetting(final String settingName, final String settingValue) {
+        final Long profileId = sessionService.getProfile().getId();
+        final Setting setting = new Setting(settingName, profileId, settingValue);
         settingRepository.save(setting);
     }
 }

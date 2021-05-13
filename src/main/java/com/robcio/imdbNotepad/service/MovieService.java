@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -70,8 +71,12 @@ public class MovieService {
     public void edit(final Long id, final Movie editData) {
         final Movie movie = get(id);
         final String description = editData.getDescription();
+        final Long profileId = editData.getProfileId();
         if (!StringUtils.isEmpty(description)) {
             movie.setDescription(description);
+        }
+        if (!Objects.isNull(profileId)) {
+            movie.setProfileId(profileId);
         }
         movieRepository.save(movie);
     }

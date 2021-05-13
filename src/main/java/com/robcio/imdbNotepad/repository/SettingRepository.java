@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface SettingRepository extends CrudRepository<Setting, String> {
 
-    Optional<Setting> findByName(String name);
+    Optional<Setting> findByNameAndProfileId(String name, Long profileId);
 }

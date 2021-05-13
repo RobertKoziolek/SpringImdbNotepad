@@ -1,8 +1,8 @@
 package com.robcio.imdbNotepad.service;
 
+import com.robcio.imdbNotepad.criteria.SortingCriteria;
+import com.robcio.imdbNotepad.criteria.WatchedCriteria;
 import com.robcio.imdbNotepad.entity.Movie;
-import com.robcio.imdbNotepad.enumeration.SortingCriteria;
-import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

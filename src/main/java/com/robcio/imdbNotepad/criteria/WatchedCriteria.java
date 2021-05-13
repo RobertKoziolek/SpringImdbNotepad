@@ -1,4 +1,4 @@
-package com.robcio.imdbNotepad.enumeration;
+package com.robcio.imdbNotepad.criteria;
 
 import com.robcio.imdbNotepad.entity.Movie;
 import lombok.AllArgsConstructor;

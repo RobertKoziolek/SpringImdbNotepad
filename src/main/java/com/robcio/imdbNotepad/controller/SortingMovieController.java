@@ -1,8 +1,8 @@
 package com.robcio.imdbNotepad.controller;
 
-import com.robcio.imdbNotepad.enumeration.OwnershipCriteria;
-import com.robcio.imdbNotepad.enumeration.SortingCriteria;
-import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
+import com.robcio.imdbNotepad.criteria.OwnershipCriteria;
+import com.robcio.imdbNotepad.criteria.SortingCriteria;
+import com.robcio.imdbNotepad.criteria.WatchedCriteria;
 import com.robcio.imdbNotepad.service.SessionService;
 import com.robcio.imdbNotepad.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class SortingMovieController {
 
     @PutMapping("/sorting/ownership")
     public String setProfileOwnershipFilter(@RequestParam final OwnershipCriteria ownershipCriteria, @RequestParam final String view) {
-        sessionService.setOwnershipCriteria(ownershipCriteria);
+        settingService.setSetting(ownershipCriteria);
         return "redirect:" + view;
     }
 }

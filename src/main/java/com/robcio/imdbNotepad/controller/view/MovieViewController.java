@@ -1,14 +1,15 @@
 package com.robcio.imdbNotepad.controller.view;
 
+import com.robcio.imdbNotepad.criteria.OwnershipCriteria;
+import com.robcio.imdbNotepad.criteria.SortingCriteria;
+import com.robcio.imdbNotepad.criteria.WatchedCriteria;
 import com.robcio.imdbNotepad.entity.Movie;
-import com.robcio.imdbNotepad.enumeration.OwnershipCriteria;
-import com.robcio.imdbNotepad.enumeration.SortingCriteria;
-import com.robcio.imdbNotepad.enumeration.WatchedCriteria;
 import com.robcio.imdbNotepad.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Set;
 
 abstract class MovieViewController {
 
@@ -27,19 +28,26 @@ abstract class MovieViewController {
     void prepareModel(final Model model) {
         final WatchedCriteria watchedCriteria = settingService.getSetting(WatchedCriteria.class);
         final SortingCriteria sortingCriteria = settingService.getSetting(SortingCriteria.class);
+        final OwnershipCriteria ownershipCriteria = settingService.getSetting(OwnershipCriteria.class);
+        final Set<String> activeGenres = settingService.getSettingSet("genres");
         final List<Movie> movieList = movieService.getAll();
         model.addAttribute("noMovies", movieList.isEmpty());
         model.addAttribute("movies", movieList);
+
         model.addAttribute("genres", filterService.getDistinctGenres());
+        model.addAttribute("activeGenres", activeGenres);
+
         model.addAttribute("selectedProfile", sessionService.getProfile());
         model.addAttribute("profiles", profileService.getAllAsMap());
-        model.addAttribute("activeGenres", filterService.getGenres());
+
         model.addAttribute("watchedSortTypes", WatchedCriteria.values());
         model.addAttribute("activeWatchedOption", watchedCriteria);
+
         model.addAttribute("sortTypes", SortingCriteria.values());
         model.addAttribute("activeSortOption", sortingCriteria);
+
         model.addAttribute("ownerships", OwnershipCriteria.values());
-        model.addAttribute("activeOwnership", sessionService.getOwnershipCriteria());
+        model.addAttribute("activeOwnership", ownershipCriteria);
     }
 
     abstract String getViewName();

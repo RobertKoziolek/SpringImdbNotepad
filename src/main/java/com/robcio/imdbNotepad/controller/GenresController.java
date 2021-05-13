@@ -1,6 +1,6 @@
 package com.robcio.imdbNotepad.controller;
 
-import com.robcio.imdbNotepad.service.FilterService;
+import com.robcio.imdbNotepad.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,17 +13,14 @@ import java.util.Set;
 @RequestMapping("/")
 public class GenresController {
 
-    private final FilterService filterService;
-
     @Autowired
-    public GenresController(final FilterService filterService) {
-        this.filterService = filterService;
-    }
+    private SettingService settingService;
+
 
     @PutMapping("/genres")
     public String changeSelectedGenres(@RequestParam(required = false) final Set<String> genres,
                                 @RequestParam final String view) {
-        filterService.setGenres(genres);
+        settingService.setSettingSet("genres", genres);
         return "redirect:" + view;
     }
 }
